@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HSK 2 Master - Hệ Thống Ôn Tập Thông Minh</title>
+    <!-- Nhập thư viện Confetti tạo hiệu ứng pháo hoa chúc mừng -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
@@ -22,7 +23,7 @@
         body { background-color: var(--bg); color: var(--text-dark); display: flex; min-height: 100vh; flex-direction: column; }
         @media (min-width: 768px) { body { flex-direction: row; } }
         
-        /* Sidebar */
+        /* Giao diện Sidebar điều hướng phía bên trái */
         .sidebar { width: 100%; background: var(--sidebar-bg); border-bottom: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 15px; }
         @media (min-width: 768px) { .sidebar { width: 300px; border-right: 1px solid var(--border); border-bottom: none; height: 100vh; position: fixed; overflow-y: auto; } }
         .logo-area h2 { color: var(--primary); font-size: 22px; font-weight: bold; }
@@ -33,25 +34,25 @@
         .lesson-box label { display: block; font-size: 11px; font-weight: bold; color: var(--primary-hover); margin-bottom: 5px; }
         .select-field { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--primary); font-size: 14px; font-weight: 600; background: white; outline: none; }
 
-        /* Tiến trình */
+        /* Tiến trình học tập */
         .progress-box { background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border); }
         .progress-title { font-size: 12px; color: #64748b; display: flex; justify-content: space-between; margin-bottom: 5px; }
         .progress-bar-bg { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
         .progress-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s; }
         
-        /* Menu điều hướng */
+        /* Menu lựa chọn phương thức ôn tập */
         .menu-list { display: flex; flex-direction: row; gap: 5px; list-style: none; overflow-x: auto; padding-bottom: 5px; }
         @media (min-width: 768px) { .menu-list { flex-direction: column; overflow-x: visible; } }
         .menu-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; color: #475569; font-size: 13px; white-space: nowrap; transition: all 0.2s; }
         .menu-item:hover { background: #f1f5f9; color: var(--primary); }
         .menu-item.active { background: #e6f9f1; color: var(--primary); }
         
-        /* Khu vực nội dung */
+        /* Workspace chính */
         .main-content { flex: 1; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         @media (min-width: 768px) { .main-content { margin-left: 300px; padding: 40px; } }
         .workspace-header { width: 100%; max-width: 700px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         
-        /* Cấu trúc Thẻ Flashcard */
+        /* Cấu trúc Thẻ Flashcard hiệu ứng lật 3D */
         .card-panel { width: 100%; max-width: 700px; display: none; flex-direction: column; align-items: center; }
         .card-panel.active { display: flex; }
         .flashcard-wrapper { perspective: 1000px; width: 100%; height: 280px; margin-bottom: 20px; cursor: pointer; }
@@ -61,7 +62,7 @@
         .card-front { background: var(--card-bg); color: var(--text-light); }
         .card-back { background: #0f172a; color: var(--text-light); transform: rotateY(180deg); }
         
-        /* Chữ Hán và phát âm */
+        /* Typography chữ Hán, phát âm và ví dụ */
         .hz-text { font-size: 48px; font-weight: bold; margin-bottom: 10px; }
         .py-text { font-size: 22px; color: var(--primary); font-style: italic; }
         .mn-text { font-size: 18px; margin: 10px 0; font-weight: 500; }
@@ -70,7 +71,7 @@
         .audio-btn { background: var(--primary); border: none; width: 40px; height: 40px; border-radius: 50%; color: white; font-size: 16px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background 0.2s; margin-left: 10px; }
         .audio-btn:hover { background: var(--primary-hover); }
         
-        /* Hệ thống nút hành động */
+        /* Hệ thống nút bấm điều hướng */
         .action-bar { display: flex; gap: 10px; width: 100%; justify-content: center; margin-top: 15px; }
         .btn { padding: 12px 20px; border-radius: 8px; border: none; font-weight: bold; font-size: 14px; cursor: pointer; flex: 1; text-align: center; transition: all 0.2s; }
         .btn-primary { background: var(--primary); color: white; }
@@ -78,7 +79,7 @@
         .btn-success { background: var(--success); color: white; }
         .btn-danger { background: var(--danger); color: white; }
         
-        /* Hộp trắc nghiệm & Tính năng chung */
+        /* Khung hiển thị nội dung kiểm tra */
         .box-holder { background: white; width: 100%; padding: 25px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.02); text-align: center; }
         .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; margin-top: 20px; }
         @media (min-width: 480px) { .options-grid { grid-template-columns: 1fr 1fr; } }
@@ -98,7 +99,7 @@
         .dict-ex { background: #f8fafc; padding: 10px; border-radius: 6px; border-left: 4px solid var(--primary); margin-top: 5px; font-size: 14px; }
         .status-badge { display: inline-block; padding: 3px 8px; font-size: 11px; font-weight: bold; border-radius: 4px; margin-left: 10px; }
         
-        /* Modal Thống kê kết thúc */
+        /* Modal Thống kê kết quả khi kết thúc */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(3px); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
         .modal-box { background: white; padding: 30px; border-radius: 16px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
@@ -132,7 +133,7 @@
             <span id="item-counter" style="font-weight: 500; color: #64748b; font-size: 14px;">Từ 1/13</span>
         </div>
 
-        <!-- PANEL 1: FLASHCARD -->
+        <!-- PANEL 1: FLASHCARD (Tuần tự) -->
         <div class="card-panel active" id="panel-flashcard">
             <div class="flashcard-wrapper" id="fcard" onclick="document.getElementById('fcard').classList.toggle('flipped')">
                 <div class="flashcard-inner">
@@ -160,7 +161,7 @@
             </div>
         </div>
 
-        <!-- PANEL 2: TRẮC NGHIỆM -->
+        <!-- PANEL 2: TRẮC NGHIỆM (Xáo ngẫu nhiên) -->
         <div class="card-panel" id="panel-quiz">
             <div class="box-holder">
                 <div class="hz-text" id="qz-hz" style="color:var(--text-dark);">...</div>
@@ -170,7 +171,7 @@
             <div class="action-bar"><button class="btn btn-primary" id="qz-next" style="display:none;" onclick="moveStep(1)">Câu tiếp theo ➔</button></div>
         </div>
 
-        <!-- PANEL 3: NGHE CHÍNH TẢ -->
+        <!-- PANEL 3: NGHE CHÍNH TẢ (Xáo ngẫu nhiên) -->
         <div class="card-panel" id="panel-dictation">
             <div class="box-holder">
                 <p style="margin-bottom:15px; font-weight:600; color:#64748b;">Nghe âm thanh và gõ lại chữ Hán:</p>
@@ -185,12 +186,12 @@
             </div>
         </div>
 
-        <!-- PANEL 4: DỊCH TRUNG VIỆT -->
+        <!-- PANEL 4: DỊCH TRUNG VIỆT (Xáo ngẫu nhiên) -->
         <div class="card-panel" id="panel-tr2vi">
             <div class="box-holder">
                 <p style="color:#64748b; font-weight:600; margin-bottom:10px;">Dịch câu văn chữ Hán sau sang tiếng Việt:</p>
                 <div id="t2v-question" style="font-size:22px; font-weight:bold; color:var(--card-bg); margin-bottom:15px;">...</div>
-                <button class="btn btn-secondary" style="max-width:15px; padding:6px 15px; font-size:13px;" onclick="speakCurrentSentence()">🔊 Nghe cả câu</button>
+                <button class="btn btn-secondary" style="max-width:150px; padding:6px 15px; font-size:13px;" onclick="speakCurrentSentence()">🔊 Nghe cả câu</button>
                 <div id="t2v-result-box" style="display:none; margin-top:20px; padding:15px; background:#f8fafc; border:1px dashed var(--primary); border-radius:8px;">
                     <p id="t2v-pinyin" style="font-style:italic; color:#64748b; font-size:14px;"></p>
                     <p id="t2v-answer" style="font-size:16px; font-weight:bold; color:var(--primary); margin-top:5px;"></p>
@@ -199,7 +200,7 @@
             <div class="action-bar"><button class="btn btn-primary" id="t2v-btn" onclick="revealTr2Vi()">Xem đáp án chính xác</button></div>
         </div>
 
-        <!-- PANEL 5: DỊCH VIỆT TRUNG -->
+        <!-- PANEL 5: DỊCH VIỆT TRUNG (Xáo ngẫu nhiên) -->
         <div class="card-panel" id="panel-vi2tr">
             <div class="box-holder">
                 <p style="color:#64748b; font-weight:600; margin-bottom:10px;">Dịch câu tiếng Việt sau sang tiếng Trung:</p>
@@ -215,13 +216,13 @@
             </div>
         </div>
 
-        <!-- PANEL 6: TỪ ĐIỂN TỔNG HỢP -->
+        <!-- PANEL 6: TỪ ĐIỂN TỔNG HỢP (Tuần tự) -->
         <div class="card-panel" id="panel-dictionary" style="max-width:100%;">
             <div id="dictionary-list" style="width:100%; max-width:700px;"></div>
         </div>
     </div>
 
-    <!-- MODAL BÁO CÁO THỐNG KÊ KẾT THÚC -->
+    <!-- MODAL THỐNG KÊ KẾT QUẢ CUỐI BÀI -->
     <div class="modal-overlay" id="stat-modal">
         <div class="modal-box">
             <h2>📊 Kết Quả Ôn Tập</h2>
@@ -230,106 +231,108 @@
                 <div class="stat-card" style="background:#dcfce7; color:#16a34a;">✅ Đã nhớ<br><span id="stat-remembered" style="font-size:24px;">0</span></div>
                 <div class="stat-card" style="background:#fee2e2; color:#dc2626;">❌ Chưa nhớ<br><span id="stat-forgotten" style="font-size:24px;">0</span></div>
             </div>
-            <button class="btn btn-primary" style="width:100%;" onclick="restartLesson()">Luyện tập lại từ đầu</button>
+            <button class="btn btn-primary" style="width:100%;" onclick="restartLesson()">Luyện tập lại bài học này</button>
         </div>
     </div>
 
     <script>
         // ========================================================
-        // CƠ SỞ DỮ LIỆU TỔNG HỢP CHUẨN (BÀI 1, BÀI 2, BÀI 3, BÀI 4 & BÀI 5)
+        // DỮ LIỆU CHUẨN HOÁ ĐỘC BẢN - KHÔNG TRÙNG LẶP CHO 5 BÀI ĐẦU
         // ========================================================
         const database = [
             // --- BÀI 1 ---
-            { lesson: "Bài 1", hanzi: "旅游", pinyin: "lǚyóu", meaning: "Du lịch", sentence: "我喜欢去中国旅游。", sentencePinyin: "Wǒ xǐhuān qù Zhōngguó lǚyóu.", sentenceMeaning: "Tôi thích đi du lịch Trung Quốc." },
-            { lesson: "Bài 1", hanzi: "觉得", pinyin: "juéde", meaning: "Cảm thấy, nghĩ rằng", sentence: "你觉得汉语难吗？", sentencePinyin: "Nǐ juéde Hànyǔ nán ma?", sentenceMeaning: "Bạn cảm thấy tiếng Trung có khó không?" },
-            { lesson: "Bài 1", hanzi: "最", pinyin: "zuì", meaning: "Nhất", sentence: "他是我最好的朋友。", sentencePinyin: "Tā shì wǒ zuì hǎo de péngyou.", sentenceMeaning: "Anh ấy là người bạn tốt nhất của tôi." },
-            { lesson: "Bài 1", hanzi: "为什么", pinyin: "wèi shénme", meaning: "Tại sao", sentence: "你为什么没去学校？", sentencePinyin: "Nǐ wèi shénme méi qù xuéxiào?", sentenceMeaning: "Tại sao bạn không đến trường?" },
-            { lesson: "Bài 1", hanzi: "也", pinyin: "yě", meaning: "Cũng", sentence: "我也是越南人。", sentencePinyin: "Wǒ yě shì Yuènán rén.", sentenceMeaning: "Tôi cũng là người Việt Nam." },
-            { lesson: "Bài 1", hanzi: "运动", pinyin: "yùndòng", meaning: "Thể thao, vận động", sentence: "多做运动对身体好。", sentencePinyin: "Duō zuò yùndòng duì shēntǐ hǎo.", sentenceMeaning: "Tập thể thao nhiều tốt cho sức khỏe." },
-            { lesson: "Bài 1", hanzi: "踢足球", pinyin: "tī zúqiú", meaning: "Đá bóng", sentence: "星期六我们去踢足球吧。", sentencePinyin: "Xīngqīliù wǒmen qù tī zúqiú ba.", sentenceMeaning: "Thứ Bảy chúng mình đi đá bóng đi." },
-            { lesson: "Bài 1", hanzi: "一起", pinyin: "yīqǐ", meaning: "Cùng nhau", sentence: "Chúng ta cùng ăn cơm nhé.", sentence: "我们一起吃饭吧。", sentencePinyin: "Wǒmen yīqǐ chīfàn ba.", sentenceMeaning: "Chúng ta cùng nhau ăn cơm nhé." },
-            { lesson: "Bài 1", hanzi: "要", pinyin: "yào", meaning: "Muốn, cần", sentence: "我要买一杯咖啡。", sentencePinyin: "Wǒ yào mǎi yī bēi kāfēi.", sentenceMeaning: "Tôi muốn mua một cốc cà phê." },
-            { lesson: "Bài 1", hanzi: "新", pinyin: "xīn", meaning: "Mới", sentence: "这是我的新电脑。", sentencePinyin: "Zhè shì wǒ de xīn diànnǎo.", sentenceMeaning: "Đây là máy tính mới của tôi." },
-            { lesson: "Bài 1", hanzi: "它", pinyin: "tā", meaning: "Nó (động vật, đồ vật)", sentence: "我有一只猫，它很漂亮。", sentencePinyin: "Wǒ yǒu yī zhī māo, tā hěn piàoliang.", sentenceMeaning: "Tôi có một con mèo, nó rất đẹp." },
-            { lesson: "Bài 1", hanzi: "眼睛", pinyin: "yǎnjing", meaning: "Mắt", sentence: "她的眼睛很大很漂亮。", sentencePinyin: "Tā de yǎnjing hěn dà hěn piàoliang.", sentenceMeaning: "Mắt của cô ấy rất to và đẹp." },
-            { lesson: "Bài 1", hanzi: "花花", pinyin: "Huāhua", meaning: "Hoa Hoa (Tên riêng)", sentence: "花花是一只可爱的大熊猫。", sentencePinyin: "Huāhua shì yī zhī kě'ài de dàxióngmāo.", sentenceMeaning: "Hoa Hoa là một chú gấu trúc đáng yêu." },
+            { lesson: "Bài 1", hanzi: "旅游", pinyin: "lǚyóu", meaning: "Du lịch", sentence: "我明年打算去中国北京旅游。", sentencePinyin: "Wǒ míngnián dǎsuàn qù Zhōngguó Běijīng lǚyóu.", sentenceMeaning: "Tôi dự định đi du lịch Bắc Kinh Trung Quốc vào năm tới." },
+            { lesson: "Bài 1", hanzi: "觉得", pinyin: "juéde", meaning: "Cảm thấy, thấy rằng", sentence: "你觉得这家汉语学校怎么样？", sentencePinyin: "Nǐ juéde zhè jiā Hànyǔ xuéxiào zěnmeyàng?", sentenceMeaning: "Bạn cảm thấy trường học tiếng Trung này thế nào?" },
+            { lesson: "Bài 1", hanzi: "最", pinyin: "zuì", meaning: "Nhất", sentence: "苹果是我最喜欢吃的水果。", sentencePinyin: "Píngguǒ shì wǒ zuì xǐhuān chī de shuǐguǒ.", sentenceMeaning: "Táo là loại hoa quả tôi thích ăn nhất." },
+            { lesson: "Bài 1", hanzi: "为什么", pinyin: "wèi shénme", meaning: "Tại sao", sentence: "你今天为什么没有去学校上课？", sentencePinyin: "Nǐ jīntiān wèi shénme méiyǒu qù xuéxiào shàngkè?", sentenceMeaning: "Tại sao hôm nay bạn không đi học ở trường?" },
+            { lesson: "Bài 1", hanzi: "也", pinyin: "yě", meaning: "Cũng", sentence: "他会说英语，也会说汉语。", sentencePinyin: "Tā huì shuō Yīngyǔ, yě huì shuō Hànyǔ.", sentenceMeaning: "Anh ấy biết nói tiếng Anh, cũng biết nói tiếng Trung." },
+            { lesson: "Bài 1", hanzi: "运动", pinyin: "yùndòng", meaning: "Thể thao, vận động", sentence: "经常做运动对我们的身体很好。", sentencePinyin: "Jīngcháng zuò yùndòng duì wǒmen de shēntǐ hěn hǎo.", sentenceMeaning: "Thường xuyên tập thể thao rất tốt cho sức khỏe của chúng ta." },
+            { lesson: "Bài 1", hanzi: "踢足球", pinyin: "tī zúqiú", meaning: "Đá bóng", sentence: "下午我们一起去公园踢足球吧。", sentencePinyin: "Xiàwǔ wǒmen yīqǐ qù gōngyuán tī zúqiú ba.", sentenceMeaning: "Chiều nay chúng ta cùng ra công viên đá bóng nhé." },
+            { lesson: "Bài 1", hanzi: "一起", pinyin: "yīqǐ", meaning: "Cùng nhau", sentence: "我们星期六一起去买新衣服吧。", sentencePinyin: "Wǒmen xīngqīliù yīqǐ qù mǎi xīn yīfu ba.", sentenceMeaning: "Thứ Bảy chúng ta cùng nhau đi mua quần áo mới nhé." },
+            { lesson: "Bài 1", hanzi: "要", pinyin: "yào", meaning: "Muốn, cần, phải", sentence: "医生说他要多喝水，多休息。", sentencePinyin: "Yīshēng shuō tā yào duō hē shuǐ, duō xiūxi.", sentenceMeaning: "Bác sĩ nói anh ấy cần uống nhiều nước, nghỉ ngơi nhiều." },
+            { lesson: "Bài 1", hanzi: "新", pinyin: "xīn", meaning: "Mới", sentence: "妈妈送给我一辆新自行车。", sentencePinyin: "Māma sòng gěi wǒ yī liàng xīn zìxíngchē.", sentenceMeaning: "Mẹ tặng cho tôi một chiếc xe đạp mới." },
+            { lesson: "Bài 1", hanzi: "它", pinyin: "tā", meaning: "Nó (động vật, đồ vật)", sentence: "它是我们家养的小猫，很温顺。", sentencePinyin: "Tā shì wǒmen jiā yǎng de xiǎomāo, hěn wēnshùn.", sentenceMeaning: "Nó là chú mèo con nhà chúng tôi nuôi, rất ngoan ngoãn." },
+            { lesson: "Bài 1", hanzi: "眼睛", pinyin: "yǎnjing", meaning: "Mắt", sentence: "妹妹的眼睛又大又亮，非常可爱。", sentencePinyin: "Mèimei de yǎnjing yòu dà yòu liàng, fēicháng kě'ài.", sentenceMeaning: "Mắt của em gái vừa to vừa sáng, cực kỳ đáng yêu." },
+            { lesson: "Bài 1", hanzi: "花花", pinyin: "Huāhua", meaning: "Hoa Hoa (Tên riêng)", sentence: "花花非常喜欢吃新鲜的竹子。", sentencePinyin: "Huāhua fēicháng xǐhuān chī xīnxiān de zhúzi.", sentenceMeaning: "Hoa Hoa rất thích ăn những cây tre tươi." },
 
             // --- BÀI 2 ---
-            { lesson: "Bài 2", hanzi: "生病", pinyin: "shēngbìng", meaning: "Sinh bệnh, bị ốm", sentence: "我生病了，今天不能去上课。", sentencePinyin: "Wǒ shēngbìng le, jīntiān bùnéng qù shàngkè.", sentenceMeaning: "Tôi bị ốm rồi, hôm nay không thể đi học được." },
-            { lesson: "Bài 2", hanzi: "每", pinyin: "měi", meaning: "Mỗi", sentence: "我每天早上都去跑步。", sentencePinyin: "Wǒ měitiān zǎoshang dōu qù pǎobù.", sentenceMeaning: "Mỗi sáng tôi đều đi chạy bộ." },
-            { lesson: "Bài 2", hanzi: "早上", pinyin: "zǎoshang", meaning: "Buổi sáng (sớm)", sentence: "早上好，你身体好点儿了吗？", sentencePinyin: "Zǎoshang hǎo, nǐ shēntǐ hǎo diǎnr le ma?", sentenceMeaning: "Chào buổi sáng, sức khỏe của bạn đã đỡ hơn chút nào chưa?" },
-            { lesson: "Bài 2", hanzi: "上午", pinyin: "shàngwǔ", meaning: "Buổi sáng (tầm 8h - 11h)", sentence: "上午我们有汉语课。", sentencePinyin: "Shàngwǔ wǒmen yǒu Hànyǔ kè.", sentenceMeaning: "Buổi sáng chúng tôi có tiết học tiếng Trung." },
-            { lesson: "Bài 2", hanzi: "中午", pinyin: "zhōngwǔ", meaning: "Buổi trưa", sentence: "我们中午十二点吃午饭。", sentencePinyin: "Wǒmen zhōngwǔ shí'èr diǎn chī wǔfàn.", sentenceMeaning: "Chúng tôi ăn cơm trưa lúc mười hai giờ trưa." },
-            { lesson: "Bài 2", hanzi: "晚上", pinyin: "wǎnshang", meaning: "Buổi tối", sentence: "你晚上几点睡觉？", sentencePinyin: "Nǐ wǎnshang jǐ diǎn shuìjiào?", sentenceMeaning: "Buổi tối bạn ngủ lúc mấy giờ?" },
-            { lesson: "Bài 2", hanzi: "凌晨", pinyin: "língchén", meaning: "Rạng sáng, nửa đêm", sentence: "他昨天工作到凌晨两点。", sentencePinyin: "Tā zuótiān gōngzuò dào língchén liǎng diǎn.", sentenceMeaning: "Hôm qua anh ấy làm việc đến tận hai giờ sáng." },
-            { lesson: "Bài 2", hanzi: "跑步", pinyin: "pǎobù", meaning: "Chạy bộ", sentence: "跑步对身体非常好。", sentencePinyin: "Pǎobù duì shēntǐ fēicháng hǎo.", sentenceMeaning: "Chạy bộ rất tốt cho sức khỏe." },
-            { lesson: "Bài 2", hanzi: "起床", pinyin: "qǐchuáng", meaning: "Thức dậy, ngủ dậy", sentence: "你每天早上几点起床？", sentencePinyin: "Nǐ měitiān zǎoshang jǐ diǎn qǐchuáng?", sentenceMeaning: "Mỗi sáng bạn thức dậy lúc mấy giờ." },
-            { lesson: "Bài 2", hanzi: "药", pinyin: "yào", meaning: "Thuốc", sentence: "这个药一天吃三次。", sentencePinyin: "Zhège yào yītiān chī sāncì.", sentenceMeaning: "Thuốc này một ngày uống ba lần." },
-            { lesson: "Bài 2", hanzi: "身体", pinyin: "shēntǐ", meaning: "Thân thể, sức khỏe", sentence: "祝你身体健康！", sentencePinyin: "Zhù nǐ shēntǐ jiànkāng!", sentenceMeaning: "Chúc bạn sức khỏe dồi dào!" },
-            { lesson: "Bài 2", hanzi: "出院", pinyin: "chūyuàn", meaning: "Xuất viện, ra viện", sentence: "医生说他下个星期可以出院。", sentencePinyin: "Yīshēng shuō tā xià ge xīngqī kěyǐ chūyuàn.", sentenceMeaning: "Bác sĩ nói tuần sau anh ấy có thể xuất viện." },
-            { lesson: "Bài 2", hanzi: "高", pinyin: "gāo", meaning: "Cao", sentence: "我哥哥比我高。", sentencePinyin: "Wǒ gēge bǐ wǒ gāo.", sentenceMeaning: "Anh trai tôi cao hơn tôi." },
-            { lesson: "Bài 2", hanzi: "米", pinyin: "mǐ", meaning: "Mét (đo lường)", sentence: "他身高一米八。", sentencePinyin: "Tā shēngāo yī mǐ bā.", sentenceMeaning: "Anh ấy cao một mét tám." },
-            { lesson: "Bài 2", hanzi: "知道", pinyin: "zhīdào", meaning: "Biết", sentence: "你知道大熊猫花花吗？", sentencePinyin: "Nǐ zhīdào dàxióngmāo Huāhua ma?", sentenceMeaning: "Bạn có biết gấu trúc Hoa Hoa không?" },
-            { lesson: "Bài 2", hanzi: "休息", pinyin: "xiūxi", meaning: "Nghỉ ngơi", sentence: "累了就休息一下吧。", sentencePinyin: "Lèile jiù xiūxi yīxià ba.", sentenceMeaning: "Mệt rồi thì nghỉ ngơi một chút đi nhé." },
-            { lesson: "Bài 2", hanzi: "忙", pinyin: "máng", meaning: "Bận rộn", sentence: "Bạn gần đây công việc bận không?", sentence: "你最近工作忙不忙？", sentencePinyin: "Nǐ zuìjìn gōngzuò máng bù máng?", sentenceMeaning: "Gần đây công việc của bạn có bận không?" },
-            { lesson: "Bài 2", hanzi: "时间", pinyin: "shíjiān", meaning: "Thời gian", sentence: "我明天没有时间去旅游。", sentencePinyin: "Wǒ míngtiān méiyǒu shíjiān qù lǚyóu.", sentenceMeaning: "Ngày mai tôi không có thời gian để đi du lịch." },
+            { lesson: "Bài 2", hanzi: "生病", pinyin: "shēngbìng", meaning: "Sinh bệnh, bị ốm", sentence: "爷爷生病了，爸爸在医院陪他。", sentencePinyin: "Yéye shēngbìng le, bàba zài yīyuàn péi tā.", sentenceMeaning: "Ông nội bị ốm rồi, bố đang ở bệnh viện bồi ông." },
+            { lesson: "Bài 2", hanzi: "每", pinyin: "měi", meaning: "Mỗi", sentence: "姐姐每个周末都去图书馆看书。", sentencePinyin: "Jiějie měi gè zhōumò dōu qù túshūguǎn kànshū.", sentenceMeaning: "Chị gái mỗi cuối tuần đều đến thư viện đọc sách." },
+            { lesson: "Bài 2", hanzi: "早上", pinyin: "zǎoshang", meaning: "Buổi sáng (sớm)", sentence: "每天早上，我都喝一杯温牛奶。", sentencePinyin: "Měitiān zǎoshang, wǒ dōu hē yī bēi wēn niúnǎi.", sentenceMeaning: "Mỗi buổi sáng, tôi đều uống một cốc sữa ấm." },
+            { lesson: "Bài 2", hanzi: "上午", pinyin: "shàngwǔ", meaning: "Buổi sáng (tầm 8h - 11h)", sentence: "老师上午在办公室，你可以去找她。", sentencePinyin: "Lǎoshī shàngwǔ zài bàngōngshì, nǐ kěyǐ qù zhǎo tā.", sentenceMeaning: "Giáo viên buổi sáng ở văn phòng, bạn có thể đến tìm cô ấy." },
+            { lesson: "Bài 2", hanzi: "中午", pinyin: "zhōngwǔ", meaning: "Buổi trưa", sentence: "我们中午在学校食堂吃牛肉面。", sentencePinyin: "Wǒmen zhōngwǔ zài xuéxiào shítáng chī niúròumiàn.", sentenceMeaning: "Buổi trưa chúng tôi ăn mì bò ở nhà ăn trường học." },
+            { lesson: "Bài 2", hanzi: "晚上", pinyin: "wǎnshang", meaning: "Buổi tối", sentence: "爸爸晚上经常在家看报纸和电视。", sentencePinyin: "Bàba wǎnshang jīngcháng zài jiā kàn bàozhǐ hé diànshì.", sentenceMeaning: "Buổi tối bố thường ở nhà đọc báo và xem ti vi." },
+            { lesson: "Bài 2", hanzi: "凌晨", pinyin: "língchén", meaning: "Rạng sáng, nửa đêm", sentence: "凌晨三点，外面突然下起了大雨。", sentencePinyin: "Língchén sān diǎn, wàimiàn tūrán xià qǐ le dàyǔ.", sentenceMeaning: "Ba giờ sáng, bên ngoài đột nhiên đổ mưa lớn." },
+            { lesson: "Bài 2", hanzi: "跑步", pinyin: "pǎobù", meaning: "Chạy bộ", sentence: "叔叔每天傍晚都去操场跑步。", sentencePinyin: "Shūshu měitiān bàngwǎn dōu qù cāochǎng pǎobù.", sentenceMeaning: "Chú tôi mỗi chiều tối đều ra sân vận động chạy bộ." },
+            { lesson: "Bài 2", hanzi: "起床", pinyin: "qǐchuáng", meaning: "Thức dậy, ngủ dậy", sentence: "我每天六点起床，然后去洗脸。", sentencePinyin: "Wǒ měitiān liù diǎn qǐchuáng, ránhòu qù xǐliǎn.", sentenceMeaning: "Mỗi ngày tôi thức dậy lúc sáu giờ, sau đó đi rửa mặt." },
+            { lesson: "Bài 2", hanzi: "药", pinyin: "yào", meaning: "Thuốc", sentence: "这种感冒药一天要吃两次。", sentencePinyin: "Zhè zhǒng gǎnmàoyào yītiān yào chī liǎng cì.", sentenceMeaning: "Loại thuốc cảm cúm này một ngày phải uống hai lần." },
+            { lesson: "Bài 2", hanzi: "身体", pinyin: "shēntǐ", meaning: "Thân thể, sức khỏe", sentence: "经常不吃早饭对身体很不好。", sentencePinyin: "Jīngcháng bù chī zǎofàn duì shēntǐ hěn bù hǎo.", sentenceMeaning: "Thường xuyên không ăn sáng rất có hại cho sức khỏe." },
+            { lesson: "Bài 2", hanzi: "出院", pinyin: "chūyuàn", meaning: "Xuất viện, ra viện", sentence: "医生说他明天就可以办出院了。", sentencePinyin: "Yīshēng shuō tā míngtiān jiù kěyǐ bàn chūyuàn le.", sentenceMeaning: "Bác sĩ nói ngày mai anh ấy có thể làm thủ tục xuất viện rồi." },
+            { lesson: "Bài 2", hanzi: "高", pinyin: "gāo", meaning: "Cao", sentence: "那个高个子的男生是我的同学。", sentencePinyin: "Nàge gāo gèzi de nánshēng shì wǒ de tóngxué.", sentenceMeaning: "Cậu nam sinh cao kều kia là bạn cùng lớp của tôi." },
+            { lesson: "Bài 2", hanzi: "米", pinyin: "mǐ", meaning: "Mét (đo lường)", sentence: "这张桌子大概有一米八长。", sentencePinyin: "Zhè zhāng zhuōzi dàgài yǒu yī mǐ bā cháng.", sentenceMeaning: "Chiếc bàn này dài khoảng một mét tám." },
+            { lesson: "Bài 2", hanzi: "知道", pinyin: "zhīdào", meaning: "Biết", sentence: "我不知道他今天为什么没有来。", sentencePinyin: "Wǒ bù zhīdào tā jīntiān wèi shénme méiyǒu lái.", sentenceMeaning: "Tôi không biết tại sao hôm nay anh ấy không đến." },
+            { lesson: "Bài 2", hanzi: "休息", pinyin: "xiūxi", meaning: "Nghỉ ngơi", sentence: "工作太累了，我们需要好好休息。", sentencePinyin: "Gōngzuò tài lèi le, wǒmen xūyào hǎohǎo xiūxi.", sentenceMeaning: "Công việc mệt mỏi quá, chúng ta cần nghỉ ngơi thật tốt." },
+            { lesson: "Bài 2", hanzi: "忙", pinyin: "máng", meaning: "Bận rộn", sentence: "经理最近非常忙，没有时间旅游。", sentencePinyin: "Jīnglǐ zuìjìn fēicháng máng, méiyǒu shíjiān lǚyóu.", sentenceMeaning: "Giám đốc gần đây rất bận, không có thời gian đi du lịch." },
+            { lesson: "Bài 2", hanzi: "时间", pinyin: "shíjiān", meaning: "Thời gian", sentence: "请给我一点时间考虑这个问题。", sentencePinyin: "Qǐng gěi wǒ yīdiǎn shíjiān kǎolǜ zhège wèntí.", sentenceMeaning: "Xin hãy cho tôi một chút thời gian để suy nghĩ vấn đề này." },
 
             // --- BÀI 3 ---
-            { lesson: "Bài 3", hanzi: "手表", pinyin: "shǒubiǎo", meaning: "Đồng hồ đeo tay", sentence: "这块手表非常漂亮。", sentencePinyin: "Zhè kuài shǒubiǎo fēicháng piàoliang.", sentenceMeaning: "Chiếc đồng hồ đeo tay này rất đẹp." },
-            { lesson: "Bài 3", hanzi: "千", pinyin: "qiān", meaning: "Nghìn, ngàn", sentence: "这部手机三千块钱。", sentencePinyin: "Zhè bù shǒujī sānqiān kuài qián.", sentenceMeaning: "Chiếc điện thoại này giá ba nghìn tệ." },
-            { lesson: "Bài 3", hanzi: "报纸", pinyin: "bàozhǐ", meaning: "Báo giấy", sentence: "爸爸每天早上都看报纸。", sentencePinyin: "Bàba měitiān zǎoshang dōu kàn bàozhǐ.", sentenceMeaning: "Bố đọc báo mỗi sáng." },
-            { lesson: "Bài 3", hanzi: "送", pinyin: "sòng", meaning: "Tặng, đưa, tiễn", sentence: "这是送给你的生日礼物。", sentencePinyin: "Zhè shì sòng gěi nǐ de shēngrì lǐwù.", sentenceMeaning: "Đây là quà sinh nhật tặng cho bạn." },
-            { lesson: "Bài 3", hanzi: "一下", pinyin: "yíxià", meaning: "Một chút, một lát", sentence: "请等一下，我去开门。", sentencePinyin: "Qǐng děng yíxià, wǒ qù kāimén.", sentenceMeaning: "Xin đợi một chút, tôi đi mở cửa." },
-            { lesson: "Bài 3", hanzi: "牛奶", pinyin: "niúnǎi", meaning: "Sữa bò", sentence: "医生说每天喝一杯牛奶对身体好。", sentencePinyin: "Yīshēng shuō měitiān hē yì bēi niúnǎi duì shēntǐ hǎo.", sentenceMeaning: "Bác sĩ nói uống một cốc sữa mỗi ngày rất tốt cho sức khỏe." },
-            { lesson: "Bài 3", hanzi: "房间", pinyin: "fángjiān", meaning: "Phòng", sentence: "我的房间很大很干净。", sentencePinyin: "Wǒ de fángjiān hěn dà hěn gānjìng.", sentenceMeaning: "Phòng của tôi rất rộng và sạch sẽ." },
-            { lesson: "Bài 3", hanzi: "丈夫", pinyin: "zhàngfu", meaning: "Chồng", sentence: "她的丈夫在医院工作。", sentencePinyin: "Tā de zhàngfu zài yīyuàn gōngzuò.", sentenceMeaning: "Chồng cô ấy làm việc ở bệnh viện." },
-            { lesson: "Bài 3", hanzi: "旁边", pinyin: "pángbiān", meaning: "Bên cạnh", sentence: "电脑旁边有一杯咖啡。", sentencePinyin: "Diànnǎo pángbiān yǒu yì bēi kāfēi.", sentenceMeaning: "Bên cạnh máy tính có một cốc cà phê." },
-            { lesson: "Bài 3", hanzi: "真", pinyin: "zhēn", meaning: "Thật, thật là", sentence: "这里的风景真漂亮！", sentencePinyin: "Zhèlǐ de fēngjǐng zhēn piàoliang!", sentenceMeaning: "Phong cảnh ở đây đẹp thật!" },
-            { lesson: "Bài 3", hanzi: "粉色", pinyin: "fěnsè", meaning: "Màu hồng", sentence: "我喜欢粉色的衣服。", sentencePinyin: "Wǒ xǐhuān fěnsè de yīfu.", sentenceMeaning: "Tôi thích quần áo màu hồng." },
-            { lesson: "Bài 3", hanzi: "颜色", pinyin: "yánsè", meaning: "Màu sắc", sentence: "你最喜欢什么颜色？", sentencePinyin: "Nǐ zuì xǐhuān shénme yánsè?", sentenceMeaning: "Bạn thích màu gì nhất?" },
-            { lesson: "Bài 3", hanzi: "左边", pinyin: "zuǒbiān", meaning: "Bên trái", sentence: "坐在我左边的是我姐姐。", sentencePinyin: "Zuò zài wǒ zuǒbiān de shì wǒ jiějie.", sentenceMeaning: "Người ngồi bên trái tôi là chị gái tôi." },
-            { lesson: "Bài 3", hanzi: "右边", pinyin: "yòubiān", meaning: "Bên phải", sentence: "学校右边有一个公共汽车站。", sentencePinyin: "Xuéxiào yòubiān yǒu yí gè gōnggòng qìchē zhàn.", sentenceMeaning: "Bên phải trường học có một trạm xe buýt." },
-            { lesson: "Bài 3", hanzi: "红色", pinyin: "hóngsè", meaning: "Màu đỏ", sentence: "他买了一辆红色的自行车。", sentencePinyin: "Tā mǎi le yí liàng hóngsè de zìxíngchē.", sentenceMeaning: "Anh ấy đã mua một chiếc xe đạp màu đỏ." },
+            { lesson: "Bài 3", hanzi: "手表", pinyin: "shǒubiǎo", meaning: "Đồng hồ đeo tay", sentence: "哥哥送给我的手表真的很漂亮。", sentencePinyin: "Gēge sòng gěi wǒ de shǒubiǎo zhēn de hěn piàoliang.", sentenceMeaning: "Chiếc đồng hồ đeo tay anh trai tặng tôi thật sự rất đẹp." },
+            { lesson: "Bài 3", hanzi: "千", pinyin: "qiān", meaning: "Nghìn, ngàn", sentence: "这一台新电脑要五千多块钱。", sentencePinyin: "Zhè yī tái xīn diànnǎo yào wǔqiān duō kuài qián.", sentenceMeaning: "Chiếc máy tính mới này giá hơn năm nghìn tệ." },
+            { lesson: "Bài 3", hanzi: "报纸", pinyin: "bàozhǐ", meaning: "Báo giấy", sentence: "现在很少人每天早上看报纸了。", sentencePinyin: "Xiànzài hěn shǎo rén měitiān zǎoshang kàn bàozhǐ le.", sentenceMeaning: "Hiện tại rất ít người đọc báo giấy mỗi sáng rồi." },
+            { lesson: "Bài 3", hanzi: "送", pinyin: "sòng", meaning: "Tặng, đưa, tiễn", sentence: "谢谢你专门开车送我来火车站。", sentencePinyin: "Xièxie nǐ zhuānmén kāichē sòng wǒ lái huǒchēzhàn.", sentenceMeaning: "Cảm ơn bạn đã đặc biệt lái xe đưa tôi đến ga tàu hỏa." },
+            { lesson: "Bài 3", hanzi: "一下", pinyin: "yíxià", meaning: "Một chút, một lát", sentence: "请你帮我看一下这封信，好吗？", sentencePinyin: "Qǐng nǐ bāng wǒ kàn yīxià zhè fēng xìn, hǎo ma?", sentenceMeaning: "Phiền bạn giúp tôi xem qua bức thư này một chút được không?" },
+            { lesson: "Bài 3", hanzi: "牛奶", pinyin: "niúnǎi", meaning: "Sữa bò", sentence: "睡觉前喝一杯牛奶能帮助睡眠。", sentencePinyin: "Shuìjiào qián hē yī bēi niúnǎi néng bāngzhù shuìmian.", sentenceMeaning: "Uống một cốc sữa trước khi ngủ có thể giúp hỗ trợ giấc ngủ." },
+            { lesson: "Bài 3", hanzi: "房间", pinyin: "fángjiān", meaning: "Phòng", sentence: "妈妈把我的房间收拾得非常干净。", sentencePinyin: "Māma bǎ wǒ de fángjiān shōushi de fēicháng gānjìng.", sentenceMeaning: "Mẹ dọn dẹp phòng của tôi cực kỳ sạch sẽ." },
+            { lesson: "Bài 3", hanzi: "丈夫", pinyin: "zhàngfu", meaning: "Chồng", sentence: "她的丈夫在一家电脑公司工作。", sentencePinyin: "Tā de zhàngfu zài yī jiā diànnǎo gōngsī gōngzuò.", sentenceMeaning: "Chồng của cô ấy làm việc ở một công ty máy tính." },
+            { lesson: "Bài 3", hanzi: "旁边", pinyin: "pángbiān", meaning: "Bên cạnh", sentence: "医院旁边有一个很大的公共汽车站。", sentencePinyin: "Yīyuàn pángbiān yǒu yīgè hěn dà de gōnggòng qìchē zhàn.", sentenceMeaning: "Bên cạnh bệnh viện có một trạm xe buýt lớn." },
+            { lesson: "Bài 3", hanzi: "真", pinyin: "zhēn", meaning: "Thật, thật là", sentence: "今天的天气真好，我们出去散步吧。", sentencePinyin: "Jīntiān de tiānqì zhēn hǎo, wǒmen chūqù sànbù ba.", sentenceMeaning: "Thời tiết hôm nay thật đẹp, chúng ta ra ngoài đi dạo đi." },
+            { lesson: "Bài 3", hanzi: "粉色", pinyin: "fěnsè", meaning: "Màu hồng", sentence: "妹妹最喜欢粉色的裙子和玩具。", sentencePinyin: "Mèimei zuì xǐhuān fěnsè de qúnzi hé wánjù.", sentenceMeaning: "Em gái thích nhất váy và đồ chơi màu hồng." },
+            { lesson: "Bài 3", hanzi: "颜色", pinyin: "yánsè", meaning: "Màu sắc", sentence: "这种汽车一共有五种不同的颜色。", sentencePinyin: "Zhè zhǒng qìchē yīgòng yǒu wǔ zhǒng bùtóng de yánsè.", sentenceMeaning: "Loại ô tô này tổng cộng có năm màu sắc khác nhau." },
+            { lesson: "Bài 3", hanzi: "左边", pinyin: "zuǒbiān", meaning: "Bên trái", sentence: "坐在你左边的那个女生是谁？", sentencePinyin: "Zuò zài nǐ zuǒbiān de nàge nǚshēng shì shéi?", sentenceMeaning: "Cô gái ngồi bên trái bạn là ai thế?" },
+            { lesson: "Bài 3", hanzi: "右边", pinyin: "yòubiān", meaning: "Bên phải", sentence: "学校的右边有一家非常便利的超市。", sentencePinyin: "Xuéxiào de yòubiān yǒu yī jiā fēicháng biànlì de chāoshì.", sentenceMeaning: "Phía bên phải trường học có một siêu thị rất tiện lợi." },
+            { lesson: "Bài 3", hanzi: "红色", pinyin: "hóngsè", meaning: "Màu đỏ", sentence: "红色在中国文化里代表着好运。", sentencePinyin: "Hóngsè zài Zhōngguó wénhuà lǐ dàibiǎo zhe hǎoyùn.", sentenceMeaning: "Màu đỏ đại diện cho sự may mắn trong văn hóa Trung Quốc." },
 
             // --- BÀI 4 ---
-            { lesson: "Bài 4", hanzi: "生日", pinyin: "shēngrì", meaning: "Sinh nhật", sentence: "祝你生日快乐！", sentencePinyin: "Zhù nǐ shēngrì kuàilè!", sentenceMeaning: "Chúc bạn sinh nhật vui vẻ!" },
-            { lesson: "Bài 4", hanzi: "快乐", pinyin: "kuàilè", meaning: "Vui vẻ, hạnh phúc", sentence: "祝大家天天快乐！", sentencePinyin: "Zhù dàjiā tiāntiān kuàilè!", sentenceMeaning: "Chúc mọi người ngày ngày vui vẻ!" },
-            { lesson: "Bài 4", hanzi: "给", pinyin: "gěi", meaning: "Cho, đưa cho, gọi (điện thoại)", sentence: "请给我打个电话。", sentencePinyin: "Qǐng gěi wǒ dǎ ge diànhuà.", sentenceMeaning: "Vui lòng gọi điện thoại cho tôi." },
-            { lesson: "Bài 4", hanzi: "接", pinyin: "jiē", meaning: "Nhận, đón, nghe (điện thoại)", sentence: "我去机场接朋友。", sentencePinyin: "Wǒ qù jīchǎng jiē péngyou.", sentenceMeaning: "Tôi đi sân bay đón bạn." },
-            { lesson: "Bài 4", hanzi: "晚上", pinyin: "wǎnshang", meaning: "Buổi tối", sentence: "我们晚上一起去吃饭吧。", sentencePinyin: "Wǒmen wǎnshang yìqǐ qù chīfàn ba.", sentenceMeaning: "Tối nay chúng ta cùng đi ăn cơm đi." },
-            { lesson: "Bài 4", hanzi: "问", pinyin: "wèn", meaning: "Hỏi", sentence: "我可以问你一个问题吗？", sentencePinyin: "Wǒ kěyǐ wèn nǐ yí ge wèntí ma?", sentenceMeaning: "Tôi có thể hỏi bạn một câu hỏi không?" },
-            { lesson: "Bài 4", hanzi: "非常", pinyin: "fēicháng", meaning: "Rất, vô cùng", sentence: "这个菜非常好吃。", sentencePinyin: "Zhège cài fēicháng hǎochī.", sentenceMeaning: "Món ăn này cực kỳ ngon." },
-            { lesson: "Bài 4", hanzi: "开始", pinyin: "kāishǐ", meaning: "Bắt đầu", sentence: "会议九点开始。", sentencePinyin: "Huìyì jiǔdiǎn kāishǐ.", sentenceMeaning: "Cuộc họp bắt đầu lúc chín giờ." },
-            { lesson: "Bài 4", hanzi: "已经", pinyin: "yǐjīng", meaning: "Đã, rồi", sentence: "他已经去北京旅游了。", sentencePinyin: "Tā yǐjīng qù Běijīng lǚyóu le.", sentenceMeaning: "Anh ấy đã đi Bắc Kinh du lịch rồi." },
-            { lesson: "Bài 4", hanzi: "长", pinyin: "cháng", meaning: "Dài (Dùng hỏi thời gian: 多长时间 - bao lâu)", sentence: "你学了多长时间汉语了？", sentencePinyin: "Nǐ xué le duō cháng shíjiān Hànyǔ le?", sentenceMeaning: "Bạn đã học tiếng Trung được bao lâu rồi?" },
-            { lesson: "Bài 4", hanzi: "两", pinyin: "liǎng", meaning: "Hai (Dùng trước lượng từ)", sentence: "我想买两本书。", sentencePinyin: "Wǒ xiǎng mǎi liǎng běn shū.", sentenceMeaning: "Tôi muốn mua hai quyển sách." },
-            { lesson: "Bài 4", hanzi: "帮", pinyin: "bāng", meaning: "Giúp, giúp đỡ", sentence: "你能帮我一个忙吗？", sentencePinyin: "Nǐ néng bāng wǒ yí ge máng ma?", sentenceMeaning: "Bạn có thể giúp tôi một tay không?" },
-            { lesson: "Bài 4", hanzi: "介绍", pinyin: "jièshào", meaning: "Giới thiệu", sentence: "我來介绍一下我的新朋友。", sentence: "我来介绍一下我的新朋友。", sentencePinyin: "Wǒ lái jièshào yíxià wǒ de xīn péngyou.", sentenceMeaning: "Tôi xin giới thiệu một chút về người bạn mới của tôi." },
+            { lesson: "Bài 4", hanzi: "生日", pinyin: "shēngrì", meaning: "Sinh nhật", sentence: "下个星期六是我的二十岁生日。", sentencePinyin: "Xià gè xīngqīliù shì wǒ de èrshí suì shēngrì.", sentenceMeaning: "Thứ Bảy tuần sau là sinh nhật tuổi hai mươi của tôi." },
+            { lesson: "Bài 4", hanzi: "快乐", pinyin: "kuàilè", meaning: "Vui vẻ, hạnh phúc", sentence: "祝你新的一年里工作顺利，天天快乐！", sentencePinyin: "Zhù nǐ xīn de yī nián lǐ gōngzuò shùnlì, tiāntiān kuàilè!", sentenceMeaning: "Chúc bạn năm mới công việc thuận lợi, ngày ngày vui vẻ!" },
+            { lesson: "Bài 4", hanzi: "给", pinyin: "gěi", meaning: "Cho, đưa cho, gọi (điện thoại)", sentence: "妈妈nguyên làm cơm ngon cho tôi.", sentence: "妈妈经常给我做我最爱吃的牛肉面。", sentencePinyin: "Māma jīngcháng gěi wǒ zuò wǒ zuì ài chī de niúròumiàn.", sentenceMeaning: "Mẹ thường xuyên nấu món mì bò tôi yêu thích nhất cho tôi." },
+            { lesson: "Bài 4", hanzi: "接", pinyin: "jiē", meaning: "Nhận, đón, nghe (điện thoại)", sentence: "我要去机场接从美国回来的朋友。", sentencePinyin: "Wǒ yào qù jīchǎng jiē cóng Měiguó huílái de péngyou.", sentenceMeaning: "Tôi phải đi sân bay đón người bạn trở về từ Mỹ." },
+            { lesson: "Bài 4", hanzi: "晚上", pinyin: "wǎnshang", meaning: "Buổi tối", sentence: "我们晚上在公园散步的时候遇到了老师。", sentencePinyin: "Wǒmen wǎnshang zài gōngyuán sànbù de shíhou yù dào le lǎoshī.", sentenceMeaning: "Lúc chúng tôi đi dạo ở công viên buổi tối thì gặp giáo viên." },
+            { lesson: "Bài 4", hanzi: "问", pinyin: "wèn", meaning: "Hỏi", sentence: "如果有什么不懂的，你可以随时问我。", sentencePinyin: "Rúguǒ yǒu shénme bù dǒng de, nǐ kěyǐ suíshí wèn wǒ.", sentenceMeaning: "Nếu có gì không hiểu, bạn có thể hỏi tôi bất cứ lúc nào." },
+            { lesson: "Bài 4", hanzi: "非常", pinyin: "fēicháng", meaning: "Rất, vô cùng", sentence: "听到这个好消息，大家都非常高兴。", sentencePinyin: "Tīng dào zhège hǎo xiāoxi, dàjiā dōu fēicháng gāoxīng.", sentenceMeaning: "Nghe thấy tin tốt này, mọi người đều vô cùng vui mừng." },
+            { lesson: "Bài 4", hanzi: "开始", pinyin: "kāishǐ", meaning: "Bắt đầu", sentence: "我们的汉语课从上午八点半开始。", sentencePinyin: "Wǒmen de Hànyǔ kè cóng shàngwǔ bā diǎn bàn kāishǐ.", sentenceMeaning: "Tiết học tiếng Trung của chúng tôi bắt đầu từ 8h30 sáng." },
+            { lesson: "Bài 4", hanzi: "Play 已经", hanzi: "已经", pinyin: "yǐjīng", meaning: "Đã, rồi", sentence: "虽然才九点，但我已经觉得很困了。", sentencePinyin: "Suīrán cái jiǔ diǎn, dàn wǒ yǐjīng juéde hěn kùn le.", sentenceMeaning: "Mặc dù mới chín giờ nhưng tôi đã cảm thấy rất buồn ngủ rồi." },
+            { lesson: "Bài 4", hanzi: "长", pinyin: "cháng", meaning: "Dài (Hỏi thời gian: Bao lâu)", sentence: "这条路很长，我们要走大概半个小时。", sentencePinyin: "Zhè tiáo lù hěn cháng, wǒmen yào zǒu dàgài bàn gè xiǎoshí.", sentenceMeaning: "Con đường này rất dài, chúng ta phải đi khoảng nửa tiếng." },
+            { lesson: "Bài 4", hanzi: "两", pinyin: "liǎng", meaning: "Hai (Dùng trước lượng từ)", sentence: "我想买两张今天晚上去北京的火车票。", sentencePinyin: "Wǒ xiǎng mǎi liǎng zhāng jīntiān wǎnshang qù Běijīng de huǒchēpiào.", sentenceMeaning: "Tôi muốn mua hai vé tàu hỏa đi Bắc Kinh tối nay." },
+            { lesson: "Bài 4", hanzi: "帮", pinyin: "bāng", meaning: "Giúp, giúp đỡ", sentence: "你能帮我把这本厚书还给图书馆吗？", sentencePinyin: "Nǐ néng bāng wǒ bǎ zhè běn hòu shū huán gěi túshūguǎn ma?", sentenceMeaning: "Bạn có thể giúp tôi trả cuốn sách dày này cho thư viện không?" },
+            { lesson: "Bài 4", hanzi: "介绍", pinyin: "jièshào", meaning: "Giới thiệu", sentence: "让我来给你介绍一下我们公司的新同事。", sentencePinyin: "Ràng wǒ lái gěi nǐ jièshào yīxià wǒmen gōngsī de xīn tóngshì.", sentenceMeaning: "Để tôi giới thiệu với bạn một chút về đồng nghiệp mới của công ty chúng tôi." },
 
             // --- BÀI 5 ---
-            { lesson: "Bài 5", hanzi: "外面", pinyin: "wàimiàn", meaning: "Bên ngoài", sentence: "外面下雨了，别出去了。", sentencePinyin: "Wàimiàn xiàyǔ le, bié chūqu le.", sentenceMeaning: "Bên ngoài trời mưa rồi, đừng đi ra ngoài." },
-            { lesson: "Bài 5", hanzi: "里面", pinyin: "lǐmiàn", meaning: "Bên trong", sentence: "房间里面没有人。", sentencePinyin: "Fángjiān lǐmiàn méiyǒu rén.", sentenceMeaning: "Bên trong phòng không có ai." },
-            { lesson: "Bài 5", hanzi: "准备", pinyin: "zhǔnbèi", meaning: "Chuẩn bị", sentence: "我准备好了，我们出发吧。", sentencePinyin: "Wǒ zhǔnbèi hǎo le, wǒmen chūfā ba.", sentenceMeaning: "Tôi chuẩn bị xong rồi, chúng ta xuất phát thôi." },
-            { lesson: "Bài 5", hanzi: "就", pinyin: "jiù", meaning: "Thì, liền, chính", sentence: "他来了，我们就可以开始了。", sentencePinyin: "Tā lái le, wǒmen jiù kěyǐ kāishǐ le.", sentenceMeaning: "Anh ấy đến rồi, chúng ta liền có thể bắt đầu." },
-            { lesson: "Bài 5", hanzi: "鱼", pinyin: "yú", meaning: "Cá", sentence: "我喜欢吃鱼。", sentencePinyin: "Wǒ xǐhuān chī yú.", sentenceMeaning: "Tôi thích ăn cá." },
-            { lesson: "Bài 5", hanzi: "吧", pinyin: "ba", meaning: "Nhé, đi (trợ từ ngữ khí)", sentence: "我们一起去吧。", sentencePinyin: "Wǒmen yīqǐ qù ba.", sentenceMeaning: "Chúng ta cùng đi đi." },
-            { lesson: "Bài 5", hanzi: "件", pinyin: "jiàn", meaning: "Chiếc, cái, kiện (lượng từ quần áo, sự việc)", sentence: "这件衣服非常漂亮。", sentencePinyin: "Zhè jiàn yīfu fēicháng piàoliang.", sentenceMeaning: "Chiếc áo này vô cùng đẹp." },
-            { lesson: "Bài 5", hanzi: "还", pinyin: "hái", meaning: "Vẫn, còn", sentence: "我还没吃饭呢。", sentencePinyin: "Wǒ hái méi chīfàn ne.", sentenceMeaning: "Tôi vẫn chưa ăn cơm." },
-            { lesson: "Bài 5", hanzi: "可以", pinyin: "kěyǐ", meaning: "Có thế, có thể", sentence: "我可以问你一个问题吗？", sentencePinyin: "Wǒ kěyǐ wèn nǐ yī gè wèntí ma?", sentenceMeaning: "Tôi có thể hỏi bạn một câu hỏi không?" },
-            { lesson: "Bài 5", hanzi: "不错", pinyin: "bùcuò", meaning: "Không tồi, khá tốt", sentence: "他的汉语很不错。", sentencePinyin: "Tā de Hànyǔ hěn bùcuò.", sentenceMeaning: "Tiếng Trung của anh ấy rất khá." },
-            { lesson: "Bài 5", hanzi: "考试", pinyin: "kǎoshì", meaning: "Thi, kiểm tra", sentence: "明天我们有汉语考试。", sentencePinyin: "Míngtiān wǒmen yǒu Hànyǔ kǎoshì.", sentenceMeaning: "Ngày mai chúng tôi có cuộc thi tiếng Trung." },
-            { lesson: "Bài 5", hanzi: "意思", pinyin: "yìsi", meaning: "Ý nghĩa, ý kiến", sentence: "这个字是什么意思？", sentencePinyin: "Zhège zì shì shénme yìsi?", sentenceMeaning: "Chữ này có ý nghĩa là gì?" },
-            { lesson: "Bài 5", hanzi: "咖啡", pinyin: "kāfēi", meaning: "Cà phê", sentence: "我想喝一杯热咖啡。", sentencePinyin: "Wǒ xiǎng hē yī bēi rè kāfēi.", sentenceMeaning: "Tôi muốn uống một ly cà phê nóng." },
-            { lesson: "Bài 5", hanzi: "对", pinyin: "duì", meaning: "Đối với", sentence: "跑步对身体很好。", sentencePinyin: "Pǎobù duì shēntǐ hěn hǎo.", sentenceMeaning: "Chạy bộ rất tốt đối với sức khỏe." },
-            { lesson: "Bài 5", hanzi: "以后", pinyin: "yǐhòu", meaning: "Sau này, sau khi", sentence: "吃饭以后我想去散步。", sentencePinyin: "Chīfàn yǐhòu wǒ xiǎng qù sànbù.", sentenceMeaning: "Sau khi ăn cơm tôi muốn đi dạo bộ." }
+            { lesson: "Bài 5", hanzi: "外面", pinyin: "wàimiàn", meaning: "Bên ngoài", sentence: "外面下着大雪，你多穿一点衣服。", sentencePinyin: "Wàimiàn xià zhe dàxuě, nǐ duō chuān yīdiǎn yīfu.", sentenceMeaning: "Bên ngoài tuyết đang rơi lớn, bạn mặc nhiều áo một chút." },
+            { lesson: "Bài 5", hanzi: "里面", pinyin: "lǐmiàn", meaning: "Bên trong", sentence: "这家商店里面卖的衣服非常便宜。", sentencePinyin: "Zhè jiā shāngdiàn lǐmiàn mài de yīfu fēicháng piányi.", sentenceMeaning: "Quần áo bán bên trong cửa hàng này rất rẻ." },
+            { lesson: "Bài 5", hanzi: "准备", pinyin: "zhǔnbèi", meaning: "Chuẩn bị", sentence: "姐姐正在准备下个星期的汉语考试。", sentencePinyin: "Jiějie zhèngzài zhǔnbèi xià gè xīngqī de Hànyǔ kǎoshì.", sentenceMeaning: "Chị gái đang chuẩn bị cho kỳ thi tiếng Trung tuần tới." },
+            { lesson: "Bài 5", hanzi: "就", pinyin: "jiù", meaning: "Thì, liền, chính", sentence: "你等我一下，我洗完脸就跟你出去。", sentencePinyin: "Nǐ děng wǒ yīxià, wǒ xǐ wán liǎn jiù gēn nǐ chūqù.", sentenceMeaning: "Bạn đợi tôi một chút, tôi rửa mặt xong là ra ngoài với bạn liền." },
+            { lesson: "Bài 5", hanzi: "鱼", pinyin: "yú", meaning: "Cá", sentence: "医生说多吃鱼对身体健康非常有益。", sentencePinyin: "Yīshēng shuō duō chī yú duì shēntǐ jiànkāng fēicháng yǒuyì.", sentenceMeaning: "Bác sĩ nói ăn nhiều cá rất có lợi cho sức khỏe thân thể." },
+            { lesson: "Bài 5", hanzi: "吧", pinyin: "ba", meaning: "Nhé, đi (Trợ từ ngữ khí)", sentence: "这里的咖啡不错，我们去喝一杯吧。", sentencePinyin: "Zhèlǐ de kāfēi bùcuò, wǒmen qù hē yī bēi ba.", sentenceMeaning: "Cà phê ở đây khá tốt, chúng ta đi uống một ly đi." },
+            { lesson: "Bài 5", hanzi: "件", pinyin: "jiàn", meaning: "Chiếc, cái (Lượng từ quần áo, sự việc)", sentence: "这件红色的衣服看起来比那件漂亮。", sentencePinyin: "Zhè jiàn hóngsè de yīfu kàn qǐlái bǐ nà jiàn piàoliang.", sentenceMeaning: "Chiếc áo màu đỏ này trông đẹp hơn chiếc áo kia." },
+            { lesson: "Bài 5", hanzi: "还", pinyin: "hái", meaning: "Vẫn, còn", sentence: "虽然生病了，但他今天还是去上班了。", sentencePinyin: "Suīrán shēngbìng le, dàn tā jīntiān háishi qù shàngbān le.", sentenceMeaning: "Mặc dù bị ốm nhưng hôm nay anh ấy vẫn đi làm." },
+            { lesson: "Bài 5", hanzi: "可以", pinyin: "kěyǐ", meaning: "Có thể", sentence: "这里的电脑你可以随便使用，没关系。", sentencePinyin: "Zhèlǐ de diànnǎo nǐ kěyǐ suíbiàn shǐyòng, méi guānxi.", sentenceMeaning: "Máy tính ở đây bạn có thể tùy ý sử dụng, không sao đâu." },
+            { lesson: "Bài 5", hanzi: "不错", pinyin: "bùcuò", meaning: "Không tồi, khá tốt", sentence: "这家新开的中国饭馆菜做得真不错。", sentencePinyin: "Zhè jiā xīn kāi de Zhōngguó fànguǎn cài zuò de zhēn bùcuò.", sentenceMeaning: "Món ăn của nhà hàng Trung Quốc mới mở này nấu thật không tồi." },
+            { lesson: "Bài 5", hanzi: "考试", pinyin: "kǎoshì", meaning: "Thi, kiểm tra", sentence: "昨天的英语考试太难了，我没写完。", sentencePinyin: "Zuótiān de Yīngyǔ kǎoshì tài nán le, wǒ méi xiě wán.", sentenceMeaning: "Kỳ thi tiếng Anh ngày hôm qua khó quá, tôi làm không kịp." },
+            { lesson: "Bài 5", hanzi: "意思", pinyin: "yìsi", meaning: "Ý nghĩa, ý kiến", sentence: "这个字的意思很复杂，你要多查字典。", sentencePinyin: "Zhège zì de yìsi hěn fùzá, nǐ yào duō chá zìdiǎn.", sentenceMeaning: "Ý nghĩa của chữ này rất phức tạp, bạn nên tra từ điển nhiều vào." },
+            { lesson: "Bài 5", hanzi: "咖啡", pinyin: "kāfēi", meaning: "Cà phê", sentence: "我习惯在早上工作前喝一杯热咖啡。", sentencePinyin: "Wǒ xíguàn zài zǎoshang gōngzuò qián hē yī bēi rè kāfēi.", sentenceMeaning: "Tôi có thói quen uống một ly cà phê nóng trước khi làm việc vào buổi sáng." },
+            { lesson: "Bài 5", hanzi: "对", pinyin: "duì", meaning: "Đối với", sentence: "多跟中国人说话对提高汉语很有帮助。", sentencePinyin: "Duō gēn Zhōngguórén shuōhuà duì tígāo Hànyǔ hěn yǒu bāngzhù.", sentenceMeaning: "Nói chuyện nhiều với người Trung Quốc rất có ích cho việc nâng cao tiếng Trung." },
+            { lesson: "Bài 5", hanzi: "以后", pinyin: "yǐhòu", meaning: "Sau này, sau khi", sentence: "毕业以后，我打算去一家中国公司工作。", sentencePinyin: "Bìyè yǐhòu, wǒ dǎsuàn qù yī jiā Zhōngguó gōngsī gōngzuò.", sentenceMeaning: "Sau khi tốt nghiệp, tôi dự định làm việc ở một công ty Trung Quốc." }
         ];
 
         let activePanel = 'flashcard';
-        let currentIndex = 0;
-        let dataset = [];
-        let memoryStatus = {}; // Lưu trạng thái: { "旅游": true, "觉得": false }
+        let currentIndex = 0;       // Dùng riêng cho chế độ xem tuần tự: Flashcard & Từ điển
+        let testIndex = 0;          // Dùng riêng cho chế độ làm bài kiểm tra xáo trộn ngẫu nhiên
+        
+        let dataset = [];           // Chứa dữ liệu gốc (Tuần tự)
+        let testDataset = [];       // Chứa dữ liệu xáo trộn ngẫu nhiên (Chống đoán mò)
+        let memoryStatus = {};      // Lưu trạng thái học tập: { "旅游": true, "觉得": false }
 
-        // Khởi động trang web
         function initApp() {
             const selectEl = document.getElementById('lesson-select');
             const uniqueLessons = [...new Set(database.map(item => item.lesson))];
@@ -341,40 +344,52 @@
             changeLesson();
         }
 
+        // Đổi bài học & Xáo ngẫu nhiên dữ liệu cho tab thi cử
         function changeLesson() {
             const selectedLesson = document.getElementById('lesson-select').value;
+            // 1. Dữ liệu gốc tuần tự
             dataset = database.filter(item => item.lesson === selectedLesson);
+            
+            // 2. Tạo bản sao xáo trộn ngẫu nhiên không trùng lắp phục vụ riêng cho Test
+            testDataset = [...dataset].sort(() => Math.random() - 0.5);
+            
             currentIndex = 0;
-            // Reset trạng thái nhớ từ của bài học mới
+            testIndex = 0;
+
+            // Khởi tạo trạng thái nhớ từ của bài học mới
             dataset.forEach(item => { if(memoryStatus[item.hanzi] === undefined) memoryStatus[item.hanzi] = false; });
             renderState();
         }
 
         function renderState() {
             if(dataset.length === 0) return;
-            const currentItem = dataset[currentIndex];
 
-            // Cập nhật thanh tiến trình
-            const percent = Math.round(((currentIndex + 1) / dataset.length) * 100);
+            // Kiểm tra xem có phải tab đang làm kiểm tra hay không
+            const isTestPanel = ['quiz', 'dictation', 'tr2vi', 'vi2tr'].includes(activePanel);
+            const currentItem = isTestPanel ? testDataset[testIndex] : dataset[currentIndex];
+            const activeIdx = isTestPanel ? testIndex : currentIndex;
+
+            // Cập nhật thanh tiến trình động dựa theo vị trí của tab hiện hành
+            const percent = Math.round(((activeIdx + 1) / dataset.length) * 100);
             document.getElementById('progress-bar').style.width = percent + "%";
             document.getElementById('progress-percent').innerText = percent + "%";
-            document.getElementById('item-counter').innerText = `Từ ${currentIndex + 1}/${dataset.length}`;
+            document.getElementById('item-counter').innerText = `Từ ${activeIdx + 1}/${dataset.length}`;
 
-            // 1. Giao diện Flashcard
+            // 1. Giao diện Flashcard (Thứ tự tuần tự)
             document.getElementById('fcard').classList.remove('flipped');
-            document.getElementById('fc-hz').innerText = currentItem.hanzi;
-            document.getElementById('fc-py').innerText = `[ ${currentItem.pinyin} ]`;
-            document.getElementById('fc-mn').innerText = currentItem.meaning;
-            document.getElementById('fc-ex').innerHTML = `<strong>Ví dụ:</strong> ${currentItem.sentence}<br><small style="color:#a8a29e">${currentItem.sentencePinyin}</small><br>👉 ${currentItem.sentenceMeaning}`;
+            document.getElementById('fc-hz').innerText = dataset[currentIndex].hanzi;
+            document.getElementById('fc-py').innerText = `[ ${dataset[currentIndex].pinyin} ]`;
+            document.getElementById('fc-mn').innerText = dataset[currentIndex].meaning;
+            document.getElementById('fc-ex').innerHTML = `<strong>Ví dụ:</strong> ${dataset[currentIndex].sentence}<br><small style="color:#a8a29e">${dataset[currentIndex].sentencePinyin}</small><br>👉 ${dataset[currentIndex].sentenceMeaning}`;
 
-            // 2. Giao diện Trắc nghiệm (Tạo nhiễu chuẩn động)
-            document.getElementById('qz-hz').innerText = currentItem.hanzi;
+            // 2. Giao diện Trắc nghiệm (Ngẫu nhiên hoàn toàn)
+            document.getElementById('qz-hz').innerText = testDataset[testIndex].hanzi;
             document.getElementById('qz-next').style.display = 'none';
             const optionsBox = document.getElementById('qz-options');
             optionsBox.innerHTML = '';
             
-            let answersPool = [currentItem.meaning];
-            let backupAnswers = database.map(x => x.meaning).filter(m => m !== currentItem.meaning);
+            let answersPool = [testDataset[testIndex].meaning];
+            let backupAnswers = database.map(x => x.meaning).filter(m => m !== testDataset[testIndex].meaning);
             backupAnswers.sort(() => Math.random() - 0.5);
             for(let i=0; i<3; i++) { if(backupAnswers[i]) answersPool.push(backupAnswers[i]); }
             answersPool.sort(() => Math.random() - 0.5);
@@ -386,21 +401,21 @@
                 btn.onclick = () => {
                     document.querySelectorAll('.option-item').forEach(el => {
                         el.disabled = true;
-                        if(el.innerText === currentItem.meaning) el.className = 'option-item correct';
+                        if(el.innerText === testDataset[testIndex].meaning) el.className = 'option-item correct';
                     });
-                    if(text === currentItem.meaning) {
-                        memoryStatus[currentItem.hanzi] = true;
+                    if(text === testDataset[testIndex].meaning) {
+                        memoryStatus[testDataset[testIndex].hanzi] = true;
                         confetti({ particleCount: 20, spread: 40 });
                     } else {
                         btn.className = 'option-item incorrect';
-                        memoryStatus[currentItem.hanzi] = false;
+                        memoryStatus[testDataset[testIndex].hanzi] = false;
                     }
                     document.getElementById('qz-next').style.display = 'block';
                 };
                 optionsBox.appendChild(btn);
             });
 
-            // 3. Giao diện Nghe chính tả
+            // 3. Giao diện Nghe chính tả (Ngẫu nhiên hoàn toàn)
             document.getElementById('dt-input').value = '';
             document.getElementById('dt-input').disabled = false;
             document.getElementById('dt-feedback').innerText = '';
@@ -409,46 +424,59 @@
             dtBtn.innerText = 'Nộp bài';
             dtBtn.onclick = checkDictationAnswer;
 
-            // 4. Giao diện Dịch Trung - Việt
-            document.getElementById('t2v-question').innerText = currentItem.sentence;
-            document.getElementById('t2v-pinyin').innerText = currentItem.sentencePinyin;
-            document.getElementById('t2v-answer').innerText = `Dịch nghĩa: ${currentItem.sentenceMeaning}`;
+            // 4. Giao diện Dịch Trung - Việt (Ngẫu nhiên hoàn toàn)
+            document.getElementById('t2v-question').innerText = testDataset[testIndex].sentence;
+            document.getElementById('t2v-pinyin').innerText = testDataset[testIndex].sentencePinyin;
+            document.getElementById('t2v-answer').innerText = `Dịch nghĩa: ${testDataset[testIndex].sentenceMeaning}`;
             document.getElementById('t2v-result-box').style.display = 'none';
             const t2vBtn = document.getElementById('t2v-btn');
             t2vBtn.innerText = 'Xem đáp án chính xác';
             t2vBtn.onclick = revealTr2Vi;
 
-            // 5. Giao diện Dịch Việt - Trung
-            document.getElementById('v2t-question').innerText = currentItem.sentenceMeaning;
-            document.getElementById('v2t-answer').innerText = currentItem.sentence;
-            document.getElementById('v2t-pinyin').innerText = currentItem.sentencePinyin;
+            // 5. Giao diện Dịch Việt - Trung (Ngẫu nhiên hoàn toàn)
+            document.getElementById('v2t-question').innerText = testDataset[testIndex].sentenceMeaning;
+            document.getElementById('v2t-answer').innerText = testDataset[testIndex].sentence;
+            document.getElementById('v2t-pinyin').innerText = testDataset[testIndex].sentencePinyin;
             document.getElementById('v2t-input').value = '';
             document.getElementById('v2t-result-box').style.display = 'none';
             const v2tBtn = document.getElementById('v2t-btn');
             v2tBtn.innerText = 'Kiểm tra & Xem đáp án';
             v2tBtn.onclick = revealVi2Tr;
 
-            // Tự động tải lại từ điển nếu đang mở mục Từ Điển
+            // Tự động cập nhật Từ điển nếu học sinh mở mục từ điển
             if(activePanel === 'dictionary') renderDictionary();
         }
 
+        // Ghi nhận trạng thái nhớ / chưa nhớ từ của Flashcard
         function markStatus(isRemembered) {
             memoryStatus[dataset[currentIndex].hanzi] = isRemembered;
             moveStep(1);
         }
 
         function moveStep(direction) {
-            if (currentIndex + direction >= dataset.length && direction > 0) {
-                showFinalReport();
-            } else if (currentIndex + direction < 0) {
-                currentIndex = 0;
+            const isTestPanel = ['quiz', 'dictation', 'tr2vi', 'vi2tr'].includes(activePanel);
+            
+            if (isTestPanel) {
+                if (testIndex + direction >= testDataset.length && direction > 0) {
+                    showFinalReport();
+                } else if (testIndex + direction < 0) {
+                    testIndex = 0;
+                } else {
+                    testIndex += direction;
+                    renderState();
+                }
             } else {
-                currentIndex += direction;
-                renderState();
+                if (currentIndex + direction >= dataset.length && direction > 0) {
+                    showFinalReport();
+                } else if (currentIndex + direction < 0) {
+                    currentIndex = 0;
+                } else {
+                    currentIndex += direction;
+                    renderState();
+                }
             }
         }
 
-        // Đọc AI phát âm tiếng Trung chuẩn
         function speakText(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -458,13 +486,22 @@
                 window.speechSynthesis.speak(speech);
             }
         }
-        function speakCurrent(e) { if(e) e.stopPropagation(); speakText(dataset[currentIndex].hanzi); }
-        function speakCurrentSentence() { speakText(dataset[currentIndex].sentence); }
+        function speakCurrent(e) { 
+            if(e) e.stopPropagation(); 
+            const isTestPanel = ['quiz', 'dictation', 'tr2vi', 'vi2tr'].includes(activePanel);
+            const currentItem = isTestPanel ? testDataset[testIndex] : dataset[currentIndex];
+            speakText(currentItem.hanzi); 
+        }
+        function speakCurrentSentence() { 
+            const isTestPanel = ['quiz', 'dictation', 'tr2vi', 'vi2tr'].includes(activePanel);
+            const currentItem = isTestPanel ? testDataset[testIndex] : dataset[currentIndex];
+            speakText(currentItem.sentence); 
+        }
 
-        // Logic xử lý Nghe chính tả
+        // Kiểm tra câu trả lời chính tả
         function checkDictationAnswer() {
             const val = document.getElementById('dt-input').value.trim();
-            const correctText = dataset[currentIndex].hanzi;
+            const correctText = testDataset[testIndex].hanzi;
             const feedback = document.getElementById('dt-feedback');
             document.getElementById('dt-input').disabled = true;
 
@@ -482,8 +519,9 @@
             dtBtn.innerText = 'Từ tiếp theo ➔';
             dtBtn.onclick = () => moveStep(1);
         }
+        
         function showHintPinyin() {
-            document.getElementById('dt-feedback').innerText = `Gợi ý phiên âm: [ ${dataset[currentIndex].pinyin} ]`;
+            document.getElementById('dt-feedback').innerText = `Gợi ý phiên âm: [ ${testDataset[testIndex].pinyin} ]`;
             document.getElementById('dt-feedback').style.color = 'var(--primary)';
         }
 
@@ -501,7 +539,7 @@
             btn.onclick = () => moveStep(1);
         }
 
-        // Hiển thị từ điển tổng hợp
+        // Hiển thị từ điển tổng hợp tuần tự
         function renderDictionary() {
             const listContainer = document.getElementById('dictionary-list');
             listContainer.innerHTML = '';
@@ -523,7 +561,7 @@
                     </div>
                     <div style="font-weight:500; font-size:15px; margin-top:3px;">Nghĩa: ${item.meaning}</div>
                     <div class="dict-ex">
-                        <strong>Ví dụ:</strong> ${item.sentence} <br>
+                        <strong>Ví dụ:</strong> ${item.sentence} <button class="audio-btn" style="width:24px; height:24px; font-size:10px; padding:0; display:inline-flex;" onclick="speakText('${item.sentence}')">🔊</button><br>
                         <span style="color:#64748b; font-size:13px;">${item.sentencePinyin}</span><br>
                         <span style="color:#475569;">👉 ${item.sentenceMeaning}</span>
                     </div>
@@ -532,7 +570,7 @@
             });
         }
 
-        // Chuyển đổi tab menu
+        // Chuyển đổi tab menu điều hướng
         function changePanel(panelName) {
             activePanel = panelName;
             document.querySelectorAll('.card-panel').forEach(el => el.classList.remove('active'));
@@ -541,14 +579,27 @@
             document.getElementById(`panel-${panelName}`).classList.add('active');
             document.getElementById(`menu-${panelName}`).classList.add('active');
 
-            const titleMap = { flashcard: "Học với Flashcards", quiz: "Trắc nghiệm kiến thức", dictation: "Nghe & Gõ chính tả chữ Hán", tr2vi: "Luyện dịch Trung - Việt", vi2tr: "Luyện dịch Việt - Trung", dictionary: "Từ điển tổng hợp bài học" };
+            const titleMap = { 
+                flashcard: "Học với Flashcards", 
+                quiz: "Trắc nghiệm kiến thức", 
+                dictation: "Nghe & Gõ chính tả chữ Hán", 
+                tr2vi: "Luyện dịch Trung - Việt", 
+                vi2tr: "Luyện dịch Việt - Trung", 
+                dictionary: "Từ điển tổng hợp bài học" 
+            };
             document.getElementById('panel-title').innerText = titleMap[panelName];
             
+            // Nếu người dùng chọn vào tab thi cử, tự động xáo lại bộ Test để nâng cao hiệu quả ôn luyện
+            if (['quiz', 'dictation', 'tr2vi', 'vi2tr'].includes(panelName)) {
+                testDataset = [...dataset].sort(() => Math.random() - 0.5);
+                testIndex = 0;
+            }
+
             if(panelName === 'dictionary') renderDictionary();
             renderState();
         }
 
-        // Thống kê kết quả
+        // Thống kê kết quả khi kết thúc bài học
         function showFinalReport() {
             let remCount = 0; let forCount = 0;
             dataset.forEach(item => { if(memoryStatus[item.hanzi]) remCount++; else forCount++; });
@@ -562,10 +613,11 @@
         function restartLesson() {
             document.getElementById('stat-modal').style.display = 'none';
             currentIndex = 0;
+            testIndex = 0;
+            testDataset = [...dataset].sort(() => Math.random() - 0.5);
             renderState();
         }
 
-        // Khởi động khi tải xong trang
         window.onload = initApp;
     </script>
 </body>
