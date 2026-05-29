@@ -236,14 +236,14 @@
 
     <script>
         // ========================================================
-        // CƠ SỞ DỮ LIỆU TỔNG HỢP CHUẨN (BÀI 1 & BÀI 2)
+        // CƠ SỞ DỮ LIỆU TỔNG HỢP CHUẨN (BÀI 1, BÀI 2 & BÀI 3)
         // ========================================================
         const database = [
             // --- BÀI 1 ---
             { lesson: "Bài 1", hanzi: "旅游", pinyin: "lǚyóu", meaning: "Du lịch", sentence: "我喜欢去中国旅游。", sentencePinyin: "Wǒ xǐhuān qù Zhōngguó lǚyóu.", sentenceMeaning: "Tôi thích đi du lịch Trung Quốc." },
             { lesson: "Bài 1", hanzi: "觉得", pinyin: "juéde", meaning: "Cảm thấy, nghĩ rằng", sentence: "你觉得汉语难吗？", sentencePinyin: "Nǐ juéde Hànyǔ nán ma?", sentenceMeaning: "Bạn cảm thấy tiếng Trung có khó không?" },
             { lesson: "Bài 1", hanzi: "最", pinyin: "zuì", meaning: "Nhất", sentence: "他是我最好的朋友。", sentencePinyin: "Tā shì wǒ zuì hǎo de péngyou.", sentenceMeaning: "Anh ấy là người bạn tốt nhất của tôi." },
-            { lesson: "Bài 1", hanzi: "为什么", pinyin: "wèi shénme", meaning: "Tại sao", sentence: "你为什么没去学校？", sentencePinyin: "Nǐ wèi shénme méi qù xuéxiào?", sentenceMeaning: "Tại sao bạn không đến trường?" },
+            { lesson: "Bài 1", hanzi: "为什么", pinyin: "wèi shénme", meaning: "Tại sao", sentence: "你为什么没去 school？", sentence: "你为什么没去学校？", sentencePinyin: "Nǐ wèi shénme méi qù xuéxiào?", sentenceMeaning: "Tại sao bạn không đến trường?" },
             { lesson: "Bài 1", hanzi: "也", pinyin: "yě", meaning: "Cũng", sentence: "我也是越南人。", sentencePinyin: "Wǒ yě shì Yuènán rén.", sentenceMeaning: "Tôi cũng là người Việt Nam." },
             { lesson: "Bài 1", hanzi: "运动", pinyin: "yùndòng", meaning: "Thể thao, vận động", sentence: "多做运动对身体好。", sentencePinyin: "Duō zuò yùndòng duì shēntǐ hǎo.", sentenceMeaning: "Tập thể thao nhiều tốt cho sức khỏe." },
             { lesson: "Bài 1", hanzi: "踢足球", pinyin: "tī zúqiú", meaning: "Đá bóng", sentence: "星期六我们去踢足球吧。", sentencePinyin: "Xīngqīliù wǒmen qù tī zúqiú ba.", sentenceMeaning: "Thứ Bảy chúng mình đi đá bóng đi." },
@@ -258,12 +258,12 @@
             { lesson: "Bài 2", hanzi: "生病", pinyin: "shēngbìng", meaning: "Sinh bệnh, bị ốm", sentence: "我生病了，今天不能去上课。", sentencePinyin: "Wǒ shēngbìng le, jīntiān bùnéng qù shàngkè.", sentenceMeaning: "Tôi bị ốm rồi, hôm nay không thể đi học được." },
             { lesson: "Bài 2", hanzi: "每", pinyin: "měi", meaning: "Mỗi", sentence: "我每天早上都去跑步。", sentencePinyin: "Wǒ měitiān zǎoshang dōu qù pǎobù.", sentenceMeaning: "Mỗi sáng tôi đều đi chạy bộ." },
             { lesson: "Bài 2", hanzi: "早上", pinyin: "zǎoshang", meaning: "Buổi sáng (sớm)", sentence: "早上好，你身体好点儿了吗？", sentencePinyin: "Zǎoshang hǎo, nǐ shēntǐ hǎo diǎnr le ma?", sentenceMeaning: "Chào buổi sáng, sức khỏe của bạn đã đỡ hơn chút nào chưa?" },
-            { lesson: "Bài 2", hanzi: "上午", pinyin: "shàngwǔ", meaning: "Buổi sáng (tầm 8h - 11h)", sentence: "上午我们有汉语课。", sentencePinyin: "Shàngwǔ wǒmen yǒu Hànyǔ kè.", sentenceMeaning: "Buổi sáng chúng tôi có tiết học tiếng Trung." },
+            { lesson: "Bài 2", hanzi: "上午", pinyin: "shàngwǔ", meaning: "Buổi sáng (tầm 8h - 11h)", sentence: "上午 chúng ta có tiết học tiếng Trung.", sentence: "上午我们有汉语课。", sentencePinyin: "Shàngwǔ wǒmen yǒu Hànyǔ kè.", sentenceMeaning: "Buổi sáng chúng tôi có tiết học tiếng Trung." },
             { lesson: "Bài 2", hanzi: "中午", pinyin: "zhōngwǔ", meaning: "Buổi trưa", sentence: "我们中午十二点吃午饭。", sentencePinyin: "Wǒmen zhōngwǔ shí'èr diǎn chī wǔfàn.", sentenceMeaning: "Chúng tôi ăn cơm trưa lúc mười hai giờ trưa." },
             { lesson: "Bài 2", hanzi: "晚上", pinyin: "wǎnshang", meaning: "Buổi tối", sentence: "你晚上几点睡觉？", sentencePinyin: "Nǐ wǎnshang jǐ diǎn shuìjiào?", sentenceMeaning: "Buổi tối bạn ngủ lúc mấy giờ?" },
-            { lesson: "Bài 2", hanzi: "凌晨", pinyin: "língchén", meaning: "Rạng sáng, nửa đêm", sentence: "他昨天 công作到凌晨两点。", sentence: "他昨天工作到凌晨两点。", sentencePinyin: "Tā zuótiān gōngzuò dào língchén liǎng diǎn.", sentenceMeaning: "Hôm qua anh ấy làm việc đến tận hai giờ sáng." },
+            { lesson: "Bài 2", hanzi: "凌晨", pinyin: "língchén", meaning: "Rạng sáng, nửa đêm", sentence: "他昨天工作到凌晨两点。", sentencePinyin: "Tā zuótiān gōngzuò dào língchén liǎng diǎn.", sentenceMeaning: "Hôm qua anh ấy làm việc đến tận hai giờ sáng." },
             { lesson: "Bài 2", hanzi: "跑步", pinyin: "pǎobù", meaning: "Chạy bộ", sentence: "跑步对身体非常好。", sentencePinyin: "Pǎobù duì shēntǐ fēicháng hǎo.", sentenceMeaning: "Chạy bộ rất tốt cho sức khỏe." },
-            { lesson: "Bài 2", hanzi: "起床", pinyin: "qǐchuáng", meaning: "Thức dậy, ngủ dậy", sentence: "你每天早上几点起床？", sentencePinyin: "Nǐ měitiān zǎoshang jǐ diǎn qǐchuáng?", sentenceMeaning: "Mỗi sáng bạn thức dậy lúc mấy giờ?" },
+            { lesson: "Bài 2", hanzi: "起床", pinyin: "qǐchuáng", meaning: "Thức dậy, ngủ dậy", sentence: "你每天早上几点起床？", sentencePinyin: "Nǐ měitiān zǎoshang jǐ diǎn qǐchuáng?", sentenceMeaning: "Mỗi sáng bạn thức dậy lúc mấy giờ." },
             { lesson: "Bài 2", hanzi: "药", pinyin: "yào", meaning: "Thuốc", sentence: "这个药一天吃三次。", sentencePinyin: "Zhège yào yītiān chī sāncì.", sentenceMeaning: "Thuốc này một ngày uống ba lần." },
             { lesson: "Bài 2", hanzi: "身体", pinyin: "shēntǐ", meaning: "Thân thể, sức khỏe", sentence: "祝你身体健康！", sentencePinyin: "Zhù nǐ shēntǐ jiànkāng!", sentenceMeaning: "Chúc bạn sức khỏe dồi dào!" },
             { lesson: "Bài 2", hanzi: "出院", pinyin: "chūyuàn", meaning: "Xuất viện, ra viện", sentence: "医生说他下个星期可以出院。", sentencePinyin: "Yīshēng shuō tā xià ge xīngqī kěyǐ chūyuàn.", sentenceMeaning: "Bác sĩ nói tuần sau anh ấy có thể xuất viện." },
@@ -272,8 +272,9 @@
             { lesson: "Bài 2", hanzi: "知道", pinyin: "zhīdào", meaning: "Biết", sentence: "你知道大熊猫花花吗？", sentencePinyin: "Nǐ zhīdào dàxióngmāo Huāhua ma?", sentenceMeaning: "Bạn có biết gấu trúc Hoa Hoa không?" },
             { lesson: "Bài 2", hanzi: "休息", pinyin: "xiūxi", meaning: "Nghỉ ngơi", sentence: "累了就休息一下吧。", sentencePinyin: "Lèile jiù xiūxi yīxià ba.", sentenceMeaning: "Mệt rồi thì nghỉ ngơi một chút đi nhé." },
             { lesson: "Bài 2", hanzi: "忙", pinyin: "máng", meaning: "Bận rộn", sentence: "你最近工作忙不忙？", sentencePinyin: "Nǐ zuìjìn gōngzuò máng bù máng?", sentenceMeaning: "Gần đây công việc của bạn có bận không?" },
-            { lesson: "Bài 2", hanzi: "时间", pinyin: "shíjiān", meaning: "Thời gian", sentence: "我明天没有时间去旅游。", sentencePinyin: "Wǒ míngtiān méiyǒu shíjiān qù lǚyóu.", sentenceMeaning: "Ngày mai tôi không có thời gian để đi du lịch." }
-       // --- BÀI 3 ---
+            { lesson: "Bài 2", hanzi: "时间", pinyin: "shíjiān", meaning: "Thời gian", sentence: "我明天没有时间去旅游。", sentencePinyin: "Wǒ míngtiān méiyǒu shíjiān qù lǚyóu.", sentenceMeaning: "Ngày mai tôi không có thời gian để đi du lịch." },
+
+            // --- BÀI 3 ---
             { lesson: "Bài 3", hanzi: "手表", pinyin: "shǒubiǎo", meaning: "Đồng hồ đeo tay", sentence: "这块手表非常漂亮。", sentencePinyin: "Zhè kuài shǒubiǎo fēicháng piàoliang.", sentenceMeaning: "Chiếc đồng hồ đeo tay này rất đẹp." },
             { lesson: "Bài 3", hanzi: "千", pinyin: "qiān", meaning: "Nghìn, ngàn", sentence: "这部手机三千块钱。", sentencePinyin: "Zhè bù shǒujī sānqiān kuài qián.", sentenceMeaning: "Chiếc điện thoại này giá ba nghìn tệ." },
             { lesson: "Bài 3", hanzi: "报纸", pinyin: "bàozhǐ", meaning: "Báo giấy", sentence: "爸爸每天早上都看报纸。", sentencePinyin: "Bàba měitiān zǎoshang dōu kàn bàozhǐ.", sentenceMeaning: "Bố đọc báo mỗi sáng." },
@@ -289,7 +290,7 @@
             { lesson: "Bài 3", hanzi: "左边", pinyin: "zuǒbiān", meaning: "Bên trái", sentence: "坐在我左边的是我姐姐。", sentencePinyin: "Zuò zài wǒ zuǒbiān de shì wǒ jiějie.", sentenceMeaning: "Người ngồi bên trái tôi là chị gái tôi." },
             { lesson: "Bài 3", hanzi: "右边", pinyin: "yòubiān", meaning: "Bên phải", sentence: "学校右边有一个公共汽车站。", sentencePinyin: "Xuéxiào yòubiān yǒu yí gè gōnggòng qìchē zhàn.", sentenceMeaning: "Bên phải trường học có một trạm xe buýt." },
             { lesson: "Bài 3", hanzi: "红色", pinyin: "hóngsè", meaning: "Màu đỏ", sentence: "他买了一辆红色的自行车。", sentencePinyin: "Tā mǎi le yí liàng hóngsè de zìxíngchē.", sentenceMeaning: "Anh ấy đã mua một chiếc xe đạp màu đỏ." }
- ];
+        ];
 
         let activePanel = 'flashcard';
         let currentIndex = 0;
