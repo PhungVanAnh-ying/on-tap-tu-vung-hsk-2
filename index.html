@@ -236,18 +236,18 @@
 
     <script>
         // ========================================================
-        // CƠ SỞ DỮ LIỆU TỔNG HỢP CHUẨN (BÀI 1, BÀI 2 & BÀI 3)
+        // CƠ SỞ DỮ LIỆU TỔNG HỢP CHUẨN (BÀI 1, BÀI 2, BÀI 3, BÀI 4 & BÀI 5)
         // ========================================================
         const database = [
             // --- BÀI 1 ---
             { lesson: "Bài 1", hanzi: "旅游", pinyin: "lǚyóu", meaning: "Du lịch", sentence: "我喜欢去中国旅游。", sentencePinyin: "Wǒ xǐhuān qù Zhōngguó lǚyóu.", sentenceMeaning: "Tôi thích đi du lịch Trung Quốc." },
             { lesson: "Bài 1", hanzi: "觉得", pinyin: "juéde", meaning: "Cảm thấy, nghĩ rằng", sentence: "你觉得汉语难吗？", sentencePinyin: "Nǐ juéde Hànyǔ nán ma?", sentenceMeaning: "Bạn cảm thấy tiếng Trung có khó không?" },
             { lesson: "Bài 1", hanzi: "最", pinyin: "zuì", meaning: "Nhất", sentence: "他是我最好的朋友。", sentencePinyin: "Tā shì wǒ zuì hǎo de péngyou.", sentenceMeaning: "Anh ấy là người bạn tốt nhất của tôi." },
-            { lesson: "Bài 1", hanzi: "为什么", pinyin: "wèi shénme", meaning: "Tại sao", sentence: "你为什么没去 school？", sentence: "你为什么没去学校？", sentencePinyin: "Nǐ wèi shénme méi qù xuéxiào?", sentenceMeaning: "Tại sao bạn không đến trường?" },
+            { lesson: "Bài 1", hanzi: "为什么", pinyin: "wèi shénme", meaning: "Tại sao", sentence: "你为什么没去学校？", sentencePinyin: "Nǐ wèi shénme méi qù xuéxiào?", sentenceMeaning: "Tại sao bạn không đến trường?" },
             { lesson: "Bài 1", hanzi: "也", pinyin: "yě", meaning: "Cũng", sentence: "我也是越南人。", sentencePinyin: "Wǒ yě shì Yuènán rén.", sentenceMeaning: "Tôi cũng là người Việt Nam." },
             { lesson: "Bài 1", hanzi: "运动", pinyin: "yùndòng", meaning: "Thể thao, vận động", sentence: "多做运动对身体好。", sentencePinyin: "Duō zuò yùndòng duì shēntǐ hǎo.", sentenceMeaning: "Tập thể thao nhiều tốt cho sức khỏe." },
             { lesson: "Bài 1", hanzi: "踢足球", pinyin: "tī zúqiú", meaning: "Đá bóng", sentence: "星期六我们去踢足球吧。", sentencePinyin: "Xīngqīliù wǒmen qù tī zúqiú ba.", sentenceMeaning: "Thứ Bảy chúng mình đi đá bóng đi." },
-            { lesson: "Bài 1", hanzi: "一起", pinyin: "yīqǐ", meaning: "Cùng nhau", sentence: "我们一起吃饭吧。", sentencePinyin: "Wǒmen yīqǐ chīfàn ba.", sentenceMeaning: "Chúng ta cùng nhau ăn cơm nhé." },
+            { lesson: "Bài 1", hanzi: "一起", pinyin: "yīqǐ", meaning: "Cùng nhau", sentence: "Chúng ta cùng ăn cơm nhé.", sentence: "我们一起吃饭吧。", sentencePinyin: "Wǒmen yīqǐ chīfàn ba.", sentenceMeaning: "Chúng ta cùng nhau ăn cơm nhé." },
             { lesson: "Bài 1", hanzi: "要", pinyin: "yào", meaning: "Muốn, cần", sentence: "我要买一杯咖啡。", sentencePinyin: "Wǒ yào mǎi yī bēi kāfēi.", sentenceMeaning: "Tôi muốn mua một cốc cà phê." },
             { lesson: "Bài 1", hanzi: "新", pinyin: "xīn", meaning: "Mới", sentence: "这是我的新电脑。", sentencePinyin: "Zhè shì wǒ de xīn diànnǎo.", sentenceMeaning: "Đây là máy tính mới của tôi." },
             { lesson: "Bài 1", hanzi: "它", pinyin: "tā", meaning: "Nó (động vật, đồ vật)", sentence: "我有一只猫，它很漂亮。", sentencePinyin: "Wǒ yǒu yī zhī māo, tā hěn piàoliang.", sentenceMeaning: "Tôi có một con mèo, nó rất đẹp." },
@@ -258,7 +258,7 @@
             { lesson: "Bài 2", hanzi: "生病", pinyin: "shēngbìng", meaning: "Sinh bệnh, bị ốm", sentence: "我生病了，今天不能去上课。", sentencePinyin: "Wǒ shēngbìng le, jīntiān bùnéng qù shàngkè.", sentenceMeaning: "Tôi bị ốm rồi, hôm nay không thể đi học được." },
             { lesson: "Bài 2", hanzi: "每", pinyin: "měi", meaning: "Mỗi", sentence: "我每天早上都去跑步。", sentencePinyin: "Wǒ měitiān zǎoshang dōu qù pǎobù.", sentenceMeaning: "Mỗi sáng tôi đều đi chạy bộ." },
             { lesson: "Bài 2", hanzi: "早上", pinyin: "zǎoshang", meaning: "Buổi sáng (sớm)", sentence: "早上好，你身体好点儿了吗？", sentencePinyin: "Zǎoshang hǎo, nǐ shēntǐ hǎo diǎnr le ma?", sentenceMeaning: "Chào buổi sáng, sức khỏe của bạn đã đỡ hơn chút nào chưa?" },
-            { lesson: "Bài 2", hanzi: "上午", pinyin: "shàngwǔ", meaning: "Buổi sáng (tầm 8h - 11h)", sentence: "上午 chúng ta có tiết học tiếng Trung.", sentence: "上午我们有汉语课。", sentencePinyin: "Shàngwǔ wǒmen yǒu Hànyǔ kè.", sentenceMeaning: "Buổi sáng chúng tôi có tiết học tiếng Trung." },
+            { lesson: "Bài 2", hanzi: "上午", pinyin: "shàngwǔ", meaning: "Buổi sáng (tầm 8h - 11h)", sentence: "上午我们有汉语课。", sentencePinyin: "Shàngwǔ wǒmen yǒu Hànyǔ kè.", sentenceMeaning: "Buổi sáng chúng tôi có tiết học tiếng Trung." },
             { lesson: "Bài 2", hanzi: "中午", pinyin: "zhōngwǔ", meaning: "Buổi trưa", sentence: "我们中午十二点吃午饭。", sentencePinyin: "Wǒmen zhōngwǔ shí'èr diǎn chī wǔfàn.", sentenceMeaning: "Chúng tôi ăn cơm trưa lúc mười hai giờ trưa." },
             { lesson: "Bài 2", hanzi: "晚上", pinyin: "wǎnshang", meaning: "Buổi tối", sentence: "你晚上几点睡觉？", sentencePinyin: "Nǐ wǎnshang jǐ diǎn shuìjiào?", sentenceMeaning: "Buổi tối bạn ngủ lúc mấy giờ?" },
             { lesson: "Bài 2", hanzi: "凌晨", pinyin: "língchén", meaning: "Rạng sáng, nửa đêm", sentence: "他昨天工作到凌晨两点。", sentencePinyin: "Tā zuótiān gōngzuò dào língchén liǎng diǎn.", sentenceMeaning: "Hôm qua anh ấy làm việc đến tận hai giờ sáng." },
@@ -271,7 +271,7 @@
             { lesson: "Bài 2", hanzi: "米", pinyin: "mǐ", meaning: "Mét (đo lường)", sentence: "他身高一米八。", sentencePinyin: "Tā shēngāo yī mǐ bā.", sentenceMeaning: "Anh ấy cao một mét tám." },
             { lesson: "Bài 2", hanzi: "知道", pinyin: "zhīdào", meaning: "Biết", sentence: "你知道大熊猫花花吗？", sentencePinyin: "Nǐ zhīdào dàxióngmāo Huāhua ma?", sentenceMeaning: "Bạn có biết gấu trúc Hoa Hoa không?" },
             { lesson: "Bài 2", hanzi: "休息", pinyin: "xiūxi", meaning: "Nghỉ ngơi", sentence: "累了就休息一下吧。", sentencePinyin: "Lèile jiù xiūxi yīxià ba.", sentenceMeaning: "Mệt rồi thì nghỉ ngơi một chút đi nhé." },
-            { lesson: "Bài 2", hanzi: "忙", pinyin: "máng", meaning: "Bận rộn", sentence: "你最近工作忙不忙？", sentencePinyin: "Nǐ zuìjìn gōngzuò máng bù máng?", sentenceMeaning: "Gần đây công việc của bạn có bận không?" },
+            { lesson: "Bài 2", hanzi: "忙", pinyin: "máng", meaning: "Bận rộn", sentence: "Bạn gần đây công việc bận không?", sentence: "你最近工作忙不忙？", sentencePinyin: "Nǐ zuìjìn gōngzuò máng bù máng?", sentenceMeaning: "Gần đây công việc của bạn có bận không?" },
             { lesson: "Bài 2", hanzi: "时间", pinyin: "shíjiān", meaning: "Thời gian", sentence: "我明天没有时间去旅游。", sentencePinyin: "Wǒ míngtiān méiyǒu shíjiān qù lǚyóu.", sentenceMeaning: "Ngày mai tôi không có thời gian để đi du lịch." },
 
             // --- BÀI 3 ---
@@ -286,10 +286,42 @@
             { lesson: "Bài 3", hanzi: "旁边", pinyin: "pángbiān", meaning: "Bên cạnh", sentence: "电脑旁边有一杯咖啡。", sentencePinyin: "Diànnǎo pángbiān yǒu yì bēi kāfēi.", sentenceMeaning: "Bên cạnh máy tính có một cốc cà phê." },
             { lesson: "Bài 3", hanzi: "真", pinyin: "zhēn", meaning: "Thật, thật là", sentence: "这里的风景真漂亮！", sentencePinyin: "Zhèlǐ de fēngjǐng zhēn piàoliang!", sentenceMeaning: "Phong cảnh ở đây đẹp thật!" },
             { lesson: "Bài 3", hanzi: "粉色", pinyin: "fěnsè", meaning: "Màu hồng", sentence: "我喜欢粉色的衣服。", sentencePinyin: "Wǒ xǐhuān fěnsè de yīfu.", sentenceMeaning: "Tôi thích quần áo màu hồng." },
-            { lesson: "Bài 3", hanzi: "颜色", pinyin: "yánsè", meaning: "Màu sắc", sentence: "Ni thích màu gì?", sentence: "你最喜欢什么颜色？", sentencePinyin: "Nǐ zuì xǐhuān shénme yánsè?", sentenceMeaning: "Bạn thích màu gì nhất?" },
+            { lesson: "Bài 3", hanzi: "颜色", pinyin: "yánsè", meaning: "Màu sắc", sentence: "你最喜欢什么颜色？", sentencePinyin: "Nǐ zuì xǐhuān shénme yánsè?", sentenceMeaning: "Bạn thích màu gì nhất?" },
             { lesson: "Bài 3", hanzi: "左边", pinyin: "zuǒbiān", meaning: "Bên trái", sentence: "坐在我左边的是我姐姐。", sentencePinyin: "Zuò zài wǒ zuǒbiān de shì wǒ jiějie.", sentenceMeaning: "Người ngồi bên trái tôi là chị gái tôi." },
             { lesson: "Bài 3", hanzi: "右边", pinyin: "yòubiān", meaning: "Bên phải", sentence: "学校右边有一个公共汽车站。", sentencePinyin: "Xuéxiào yòubiān yǒu yí gè gōnggòng qìchē zhàn.", sentenceMeaning: "Bên phải trường học có một trạm xe buýt." },
-            { lesson: "Bài 3", hanzi: "红色", pinyin: "hóngsè", meaning: "Màu đỏ", sentence: "他买了一辆红色的自行车。", sentencePinyin: "Tā mǎi le yí liàng hóngsè de zìxíngchē.", sentenceMeaning: "Anh ấy đã mua một chiếc xe đạp màu đỏ." }
+            { lesson: "Bài 3", hanzi: "红色", pinyin: "hóngsè", meaning: "Màu đỏ", sentence: "他买了一辆红色的自行车。", sentencePinyin: "Tā mǎi le yí liàng hóngsè de zìxíngchē.", sentenceMeaning: "Anh ấy đã mua một chiếc xe đạp màu đỏ." },
+
+            // --- BÀI 4 ---
+            { lesson: "Bài 4", hanzi: "生日", pinyin: "shēngrì", meaning: "Sinh nhật", sentence: "祝你生日快乐！", sentencePinyin: "Zhù nǐ shēngrì kuàilè!", sentenceMeaning: "Chúc bạn sinh nhật vui vẻ!" },
+            { lesson: "Bài 4", hanzi: "快乐", pinyin: "kuàilè", meaning: "Vui vẻ, hạnh phúc", sentence: "祝大家天天快乐！", sentencePinyin: "Zhù dàjiā tiāntiān kuàilè!", sentenceMeaning: "Chúc mọi người ngày ngày vui vẻ!" },
+            { lesson: "Bài 4", hanzi: "给", pinyin: "gěi", meaning: "Cho, đưa cho, gọi (điện thoại)", sentence: "请给我打个电话。", sentencePinyin: "Qǐng gěi wǒ dǎ ge diànhuà.", sentenceMeaning: "Vui lòng gọi điện thoại cho tôi." },
+            { lesson: "Bài 4", hanzi: "接", pinyin: "jiē", meaning: "Nhận, đón, nghe (điện thoại)", sentence: "我去机场接朋友。", sentencePinyin: "Wǒ qù jīchǎng jiē péngyou.", sentenceMeaning: "Tôi đi sân bay đón bạn." },
+            { lesson: "Bài 4", hanzi: "晚上", pinyin: "wǎnshang", meaning: "Buổi tối", sentence: "我们晚上一起去吃饭吧。", sentencePinyin: "Wǒmen wǎnshang yìqǐ qù chīfàn ba.", sentenceMeaning: "Tối nay chúng ta cùng đi ăn cơm đi." },
+            { lesson: "Bài 4", hanzi: "问", pinyin: "wèn", meaning: "Hỏi", sentence: "我可以问你一个问题吗？", sentencePinyin: "Wǒ kěyǐ wèn nǐ yí ge wèntí ma?", sentenceMeaning: "Tôi có thể hỏi bạn một câu hỏi không?" },
+            { lesson: "Bài 4", hanzi: "非常", pinyin: "fēicháng", meaning: "Rất, vô cùng", sentence: "这个菜非常好吃。", sentencePinyin: "Zhège cài fēicháng hǎochī.", sentenceMeaning: "Món ăn này cực kỳ ngon." },
+            { lesson: "Bài 4", hanzi: "开始", pinyin: "kāishǐ", meaning: "Bắt đầu", sentence: "会议九点开始。", sentencePinyin: "Huìyì jiǔdiǎn kāishǐ.", sentenceMeaning: "Cuộc họp bắt đầu lúc chín giờ." },
+            { lesson: "Bài 4", hanzi: "已经", pinyin: "yǐjīng", meaning: "Đã, rồi", sentence: "他已经去北京旅游了。", sentencePinyin: "Tā yǐjīng qù Běijīng lǚyóu le.", sentenceMeaning: "Anh ấy đã đi Bắc Kinh du lịch rồi." },
+            { lesson: "Bài 4", hanzi: "长", pinyin: "cháng", meaning: "Dài (Dùng hỏi thời gian: 多长时间 - bao lâu)", sentence: "你学了多长时间汉语了？", sentencePinyin: "Nǐ xué le duō cháng shíjiān Hànyǔ le?", sentenceMeaning: "Bạn đã học tiếng Trung được bao lâu rồi?" },
+            { lesson: "Bài 4", hanzi: "两", pinyin: "liǎng", meaning: "Hai (Dùng trước lượng từ)", sentence: "我想买两本书。", sentencePinyin: "Wǒ xiǎng mǎi liǎng běn shū.", sentenceMeaning: "Tôi muốn mua hai quyển sách." },
+            { lesson: "Bài 4", hanzi: "帮", pinyin: "bāng", meaning: "Giúp, giúp đỡ", sentence: "你能帮我一个忙吗？", sentencePinyin: "Nǐ néng bāng wǒ yí ge máng ma?", sentenceMeaning: "Bạn có thể giúp tôi một tay không?" },
+            { lesson: "Bài 4", hanzi: "介绍", pinyin: "jièshào", meaning: "Giới thiệu", sentence: "我來介绍一下我的新朋友。", sentence: "我来介绍一下我的新朋友。", sentencePinyin: "Wǒ lái jièshào yíxià wǒ de xīn péngyou.", sentenceMeaning: "Tôi xin giới thiệu một chút về người bạn mới của tôi." },
+
+            // --- BÀI 5 ---
+            { lesson: "Bài 5", hanzi: "外面", pinyin: "wàimiàn", meaning: "Bên ngoài", sentence: "外面下雨了，别出去了。", sentencePinyin: "Wàimiàn xiàyǔ le, bié chūqu le.", sentenceMeaning: "Bên ngoài trời mưa rồi, đừng đi ra ngoài." },
+            { lesson: "Bài 5", hanzi: "里面", pinyin: "lǐmiàn", meaning: "Bên trong", sentence: "房间里面没有人。", sentencePinyin: "Fángjiān lǐmiàn méiyǒu rén.", sentenceMeaning: "Bên trong phòng không có ai." },
+            { lesson: "Bài 5", hanzi: "准备", pinyin: "zhǔnbèi", meaning: "Chuẩn bị", sentence: "我准备好了，我们出发吧。", sentencePinyin: "Wǒ zhǔnbèi hǎo le, wǒmen chūfā ba.", sentenceMeaning: "Tôi chuẩn bị xong rồi, chúng ta xuất phát thôi." },
+            { lesson: "Bài 5", hanzi: "就", pinyin: "jiù", meaning: "Thì, liền, chính", sentence: "他来了，我们就可以开始了。", sentencePinyin: "Tā lái le, wǒmen jiù kěyǐ kāishǐ le.", sentenceMeaning: "Anh ấy đến rồi, chúng ta liền có thể bắt đầu." },
+            { lesson: "Bài 5", hanzi: "鱼", pinyin: "yú", meaning: "Cá", sentence: "我喜欢吃鱼。", sentencePinyin: "Wǒ xǐhuān chī yú.", sentenceMeaning: "Tôi thích ăn cá." },
+            { lesson: "Bài 5", hanzi: "吧", pinyin: "ba", meaning: "Nhé, đi (trợ từ ngữ khí)", sentence: "我们一起去吧。", sentencePinyin: "Wǒmen yīqǐ qù ba.", sentenceMeaning: "Chúng ta cùng đi đi." },
+            { lesson: "Bài 5", hanzi: "件", pinyin: "jiàn", meaning: "Chiếc, cái, kiện (lượng từ quần áo, sự việc)", sentence: "这件衣服非常漂亮。", sentencePinyin: "Zhè jiàn yīfu fēicháng piàoliang.", sentenceMeaning: "Chiếc áo này vô cùng đẹp." },
+            { lesson: "Bài 5", hanzi: "还", pinyin: "hái", meaning: "Vẫn, còn", sentence: "我还没吃饭呢。", sentencePinyin: "Wǒ hái méi chīfàn ne.", sentenceMeaning: "Tôi vẫn chưa ăn cơm." },
+            { lesson: "Bài 5", hanzi: "可以", pinyin: "kěyǐ", meaning: "Có thế, có thể", sentence: "我可以问你一个问题吗？", sentencePinyin: "Wǒ kěyǐ wèn nǐ yī gè wèntí ma?", sentenceMeaning: "Tôi có thể hỏi bạn một câu hỏi không?" },
+            { lesson: "Bài 5", hanzi: "不错", pinyin: "bùcuò", meaning: "Không tồi, khá tốt", sentence: "他的汉语很不错。", sentencePinyin: "Tā de Hànyǔ hěn bùcuò.", sentenceMeaning: "Tiếng Trung của anh ấy rất khá." },
+            { lesson: "Bài 5", hanzi: "考试", pinyin: "kǎoshì", meaning: "Thi, kiểm tra", sentence: "明天我们有汉语考试。", sentencePinyin: "Míngtiān wǒmen yǒu Hànyǔ kǎoshì.", sentenceMeaning: "Ngày mai chúng tôi có cuộc thi tiếng Trung." },
+            { lesson: "Bài 5", hanzi: "意思", pinyin: "yìsi", meaning: "Ý nghĩa, ý kiến", sentence: "这个字是什么意思？", sentencePinyin: "Zhège zì shì shénme yìsi?", sentenceMeaning: "Chữ này có ý nghĩa là gì?" },
+            { lesson: "Bài 5", hanzi: "咖啡", pinyin: "kāfēi", meaning: "Cà phê", sentence: "我想喝一杯热咖啡。", sentencePinyin: "Wǒ xiǎng hē yī bēi rè kāfēi.", sentenceMeaning: "Tôi muốn uống một ly cà phê nóng." },
+            { lesson: "Bài 5", hanzi: "对", pinyin: "duì", meaning: "Đối với", sentence: "跑步对身体很好。", sentencePinyin: "Pǎobù duì shēntǐ hěn hǎo.", sentenceMeaning: "Chạy bộ rất tốt đối với sức khỏe." },
+            { lesson: "Bài 5", hanzi: "以后", pinyin: "yǐhòu", meaning: "Sau này, sau khi", sentence: "吃饭以后我想去散步。", sentencePinyin: "Chīfàn yǐhòu wǒ xiǎng qù sànbù.", sentenceMeaning: "Sau khi ăn cơm tôi muốn đi dạo bộ." }
         ];
 
         let activePanel = 'flashcard';
